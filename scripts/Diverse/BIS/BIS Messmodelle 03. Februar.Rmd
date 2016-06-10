@@ -1,0 +1,1858 @@
+---
+title: "BIS Messmodelle"
+author: "Datensätze von Philipp & Olivier im Vergleich"
+date: "3 Februar 2016"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+classoption: a4paper
+---
+```{r setup, include=FALSE}
+opts_chunk$set(dev = 'pdf')
+```
+
+```{r, echo=FALSE}
+dat <- read.xlsx(file = "BIS.xlsx", 1) # ACHTUNG: diese file liegt nicht im project directory!!!
+dat <- dat[complete.cases(dat),]
+dat <- as.data.frame(apply(dat,2,function(x)gsub("\\s+", "",x)))
+as.numeric.factor <- function(x) {as.numeric(levels(x))[x]}
+dat[c(1,9:54)] <- lapply(dat[c(1,9:54)], as.numeric.factor)
+dat <- droplevels(dat)
+levels(dat$vision) <- c("good", "medium", "poor")
+levels(dat$hearing) <- c("good", "medium", "poor")
+levels(dat$disease) <- c("yes", "no")
+levels(dat$drug) <- c("yes","no")
+levels(dat$smoking) <- c("yes","no")
+levels(dat$exp1) <- c("Daniele","Dominic","JasminS","Philipp")
+resultsBIS <- dat
+rm(dat)
+resultsBIS <- arrange(resultsBIS, subject)
+resultsBIS <- subset(resultsBIS, select = -weg)
+resultsBIS <- subset(resultsBIS, !subject %in% c(54,72,98,160))
+
+resultsBIS$zAN <- scale(resultsBIS$ANraw)
+resultsBIS$zBD <- scale(resultsBIS$BDraw)
+resultsBIS$zCH <- scale(resultsBIS$CHraw)
+resultsBIS$zKW <- scale(resultsBIS$KWraw)
+resultsBIS$zOE <- scale(resultsBIS$OEraw)
+resultsBIS$zOG <- scale(resultsBIS$OGraw)
+resultsBIS$zRZ <- scale(resultsBIS$RZraw)
+resultsBIS$zSC <- scale(resultsBIS$SCraw)
+resultsBIS$zST <- scale(resultsBIS$STraw)
+resultsBIS$zTG <- scale(resultsBIS$TGraw)
+resultsBIS$zTM <- scale(resultsBIS$TMraw)
+resultsBIS$zUW <- scale(resultsBIS$UWraw)
+resultsBIS$zWA <- scale(resultsBIS$WAraw)
+resultsBIS$zWE <- scale(resultsBIS$WEraw)
+resultsBIS$zWM <- scale(resultsBIS$WMraw)
+resultsBIS$zXG <- scale(resultsBIS$XGraw)
+resultsBIS$zZN <- scale(resultsBIS$ZNraw)
+resultsBIS$zZP <- scale(resultsBIS$ZPraw)
+resultsBIS$zZZ <- scale(resultsBIS$ZZraw)
+
+resultsBIS$zNumeric  <- rowMeans(subset(resultsBIS, select = c(zRZ, zSC, zXG, zZN, zZP, zZZ)))
+resultsBIS$zVerbal   <- rowMeans(subset(resultsBIS, select = c(zST, zWA, zTG, zTM, zWM, zKW)))
+resultsBIS$zFigural  <- rowMeans(subset(resultsBIS, select = c(zAN, zBD, zOE, zOG, zWE, zCH)))
+resultsBIS$zSpeed    <- rowMeans(subset(resultsBIS, select = c(zOE, zBD, zTG, zRZ, zKW, zXG)))
+resultsBIS$zCapacity <- rowMeans(subset(resultsBIS, select = c(zAN, zCH, zWA, zTM, zZN, zSC)))
+resultsBIS$zMemory   <- rowMeans(subset(resultsBIS, select = c(zOG, zWE, zST, zWM, zZP, zZZ)))
+
+resultsBIS$zSpeedNumeric    <- rowMeans(subset(resultsBIS, select = c(zXG, zRZ)))
+resultsBIS$zSpeedVerbal     <- rowMeans(subset(resultsBIS, select = c(zTG, zKW)))
+resultsBIS$zSpeedFigural    <- rowMeans(subset(resultsBIS, select = c(zBD, zOE)))
+
+resultsBIS$zCapacityNumeric <- rowMeans(subset(resultsBIS, select = c(zZN, zSC)))
+resultsBIS$zCapacityVerbal  <- rowMeans(subset(resultsBIS, select = c(zWA, zTM)))
+resultsBIS$zCapacityFigural <- rowMeans(subset(resultsBIS, select = c(zAN, zCH)))
+
+resultsBIS$zMemoryNumeric   <- rowMeans(subset(resultsBIS, select = c(zZP, zZZ)))
+resultsBIS$zMemoryVerbal    <- rowMeans(subset(resultsBIS, select = c(zST, zWM)))
+resultsBIS$zMemoryFigural   <- rowMeans(subset(resultsBIS, select = c(zOG, zWE)))
+
+resultsBIS$zTotal <- rowMeans(subset(resultsBIS, select = c(zRZ, zSC, zXG, zZN, zZP, zZZ,
+                                                            zST, zWA, zTG, zTM, zWM, zKW,
+                                                            zAN, zBD, zOE, zOG, zWE, zCH,
+                                                            zOE, zBD, zTG, zRZ, zKW, zXG,
+                                                            zAN, zCH, zWA, zTM, zZN, zSC,
+                                                            zOG, zWE, zST, zWM, zZP, zZZ)))
+
+resultsBIS <- resultsBIS[,c(1:8,
+                    9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,
+                    10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,
+                    54:72,
+                    79:87,
+                    73:78,
+                    88,
+                    47:52,
+                    53
+                    )]
+
+resultsBIS <- subset(resultsBIS, select = -c(ANraw,BDraw,CHraw,KWraw,OEraw,OGraw,
+                                             RZraw,SCraw,STraw,TGraw,TMraw,UWraw,
+                                             WAraw,WEraw,WMraw,XGraw,ZNraw,ZPraw,
+                                             ZZraw,
+                                             ANcf,BDsf,CHcf,KWsv,OEsf,OGmf,
+                                             RZsn,SCcn,STmv,TGsv,TMcv,UWsv,
+                                             WAcv,WEmf,WMmv,XGsn,ZNcn,ZPmn,
+                                             ZZmn,C,S,M,V,N,F,sumVNF))
+
+resultsBIS <- subset(resultsBIS, !subject == 138)
+
+olizBIS <- c(-0.025870687,  0.975029078  ,0.430234696, -0.531584574,-0.111529375, -0.721289579,
+0.227895758 , 0.358834001  ,0.099534600 ,-0.330806311 , 0.355621656  ,0.393366559,
+.147546207 ,-0.649636558 ,-0.423120318  ,0.491346455 ,-0.381076240 ,-0.527171681,
+.636758765  ,0.586623934 ,-0.124115887  ,0.333690763,  0.144245139 ,-1.154826207,
+.573904199  ,0.112816789  ,0.619189742  ,0.556190830,  0.217429042 ,-0.388037353,
+-0.884098602,  0.275914842 ,-0.634887530,  0.622320893,  0.959231698, -0.336015182,
+1.034513647 , 1.101839419  ,0.003933568 ,-0.127067688 , 0.194625011 , 0.615420725,
+0.008092141 , 0.631654908  ,0.541450687 ,-0.678500874 , 0.031344018 , 0.302432778,
+0.031866609 , 0.845918672  ,0.646375983 , 0.313581690 ,-0.199072499 ,-0.334494336,
+-0.408025974,  0.418298842,  0.971173379, -0.301318297, -0.403738107,  0.009952210,
+0.195534581 ,-0.206145204 ,-0.120329691 , 0.472471229 ,-0.999734233 , 0.659579568,
+-0.377854087,  0.573324668, -0.120695201,  0.162233338,  0.529905301,  0.470708876,
+0.200747357 , 0.216044259 , 0.100922189 , 0.632765251 , 0.261540387 ,-0.232127141,
+-0.194741595,  0.418281254, -0.729781370, -0.194750928,  0.457608801,  0.114241876,
+-0.485485115, -0.132078594, -0.318299056, -0.788598255,  0.013570292, -0.586539010,
+0.125819104 ,-0.426580765 , 1.007791469 ,-0.490950057 ,-0.295499213 ,-0.097564302,
+-0.463842261, -0.529995631, -0.979030747, -0.560062685,  0.472449939, -0.295779440,
+-0.709897994,  0.026461424, -0.175892477, -0.339103062, -0.475608268, -0.314746912,
+-0.530543283, -0.337824834,  0.220933610,  0.937995166, -0.111731637, -0.923352675,
+0.046740689 ,-0.144389315 ,-0.716643998 ,-0.134934794 ,-0.393420975 , 0.073386156,
+-0.164174528, -0.351700049, -0.279635539, -0.192526125, -0.279136198,  0.500903002,
+0.342469707 , 0.305751548 ,-0.601632418 , 0.252544865 , 0.327101623 ,-0.870553346,
+-0.240744772, -0.134178756,  0.345026665, -0.620323730, -0.185206074, -0.156293956,
+-0.811193029, -0.509329768, -0.322123331,  0.060587619, -0.463788490, -0.872752739,
+0.262460208 , 0.535863608 , 0.913885840 ,-0.719811317 ,-1.002631394 ,-0.051542801,
+-0.049331706, -0.461451658, -0.123545876, -0.846142492,  0.131964445, -0.038131581,
+-0.106219132,  0.162432027, -0.173589153,  0.213225923, -0.946015064, -0.929531936,
+0.085009748 ,-0.255330628 ,-0.440682808 ,-0.458568137 , 1.052159794 ,-0.116064568,
+0.863793416 ,-0.643593478 ,-0.240571446 , 0.112357403 ,-0.107641342 ,-0.976959210,
+-1.118288099, -0.152264445, -0.343592820,  1.142000431, -0.277599197,  1.488204063,
+0.557814920 , 0.890303595 , 0.509340012 ,-0.161505955 , 0.662618843 , 1.518552363,
+0.102367742 ,-0.274434625 , 0.395381278 ,-0.156992931 ,-0.105595842 ,-0.208856963,
+0.859866172 , 0.484318276 , 0.473997808 , 0.560052459 , 0.873969517 ,-0.288636505,
+0.030004553 , 0.491692056 , 0.076267356 ,-0.479437784 ,-0.809545014 ,-0.176426389,
+-0.943300946,  0.245836642, -0.129335612,  0.102602514,  0.112936780, -0.784988768,
+-0.239049296,  0.931118254,  0.100884057, -0.580515197,  1.045712855,  0.752234170,
+0.852419020 , 0.828015948 , 0.452640283 , 1.582213139 , 0.638773659 , 1.408118322,
+-0.226607923,  0.193069188, -0.512694078, -0.797566378,  0.007118835, -0.641116666,
+0.267651802 , 1.067125483 , 0.422057950 , 0.531585675 , 0.635083356 , 0.776888608,
+-0.975582261, -1.540547419, -0.447991636, -0.427533657, -1.213460751, -0.534113621,
+-0.848564127)
+```
+\pagebreak
+
+#1 Vergleich der  Datensätze
+Um zu kontrollieren, ob Differenzen bei den Messmodellen auf offensichtliche Unterschiede zwischen den Daten zurückzuführen sind,
+werden hier als erstes die Verteilungen verglichen und die Differenz der Korrelationsmatrix der Operationen und Inhalten berichtet.
+
+##1.1 Dichte der Verteilungen
+In der Abbildung abgetragen sind die z-Werte aller Personen über alle 18 Subtests gemittelt. Blau schraffiert ist die Verteilung von Philipp's Datensatz. Grau schraffiert ist die Verteilung von Olivier's Datensatz. Philipp's Standardabweichung beträgt
+**`r round(sd(resultsBIS$zTotal), digits = 2)`**. Olivier's Standardabweichung beträgt **`r round(sd(olizBIS), digits = 2)`**.
+
+```{r, echo=FALSE, fig.align='center'}
+plot(density(olizBIS, bw = .1),
+     main = "",
+     col = 1,
+     xlim = c(-2,2),
+     ylim = c(0,1),
+     xaxt = "n",
+     yaxt = "n",
+     xlab = "BIS z-Werte über alle 18 Subtests gemittelt",
+     cex.axis = .5,
+     cex.lab = .5,
+     ylab = "",
+     bty = "n",
+     lwd = 0)
+
+axis(side = 1, at = seq(-2,2,.5), cex.axis = .5)
+polygon(density(olizBIS, bw = .1),
+        col = "8",
+        density = 60)
+
+lines(density(resultsBIS$zTotal, bw = .1))
+polygon(density(resultsBIS$zTotal,
+                bw = .1),
+        col = "blue",
+        density = 20)
+
+text(1,.4,labels= "Oli's Daten, N = 241", col=8, cex=.5)
+text(.4,.85,labels= paste("Philipp's Daten, N = ", nrow(resultsBIS), sep = ""), col=4, cex=.5)
+```
+
+##1.2 Zusammenhänge der z-Werte
+
+```{r, echo=FALSE}
+phil <- corr.test(resultsBIS[c(40,42,41,39,38,37,43)])$r
+oli <- structure(c(1, 0.540151389005995, 0.597767143602889, 0.725463565718552,
+0.747674794788115, 0.68401210758944, 0.847688578559715, 0.540151389005995,
+1, 0.525974138722285, 0.673980434614355, 0.685687387564036, 0.710635541747782,
+0.814967123370369, 0.597767143602889, 0.525974138722285, 1, 0.703397231914946,
+0.677178516251049, 0.784731968402547, 0.852534771582176, 0.725463565718552,
+0.673980434614355, 0.703397231914946, 1, 0.543291249090875, 0.624338283735174,
+0.835861734911644, 0.747674794788115, 0.685687387564036, 0.677178516251049,
+0.543291249090875, 1, 0.565402919327056, 0.838128149291049, 0.68401210758944,
+0.710635541747782, 0.784731968402547, 0.624338283735174, 0.565402919327056,
+1, 0.867638053307395, 0.847688578559715, 0.814967123370369, 0.852534771582176,
+0.835861734911644, 0.838128149291049, 0.867638053307395, 1), .Dim = c(7L,
+7L), .Dimnames = list(c("speed.z.mean", "memo.z.mean", "cap.z.mean",
+"fig.z.mean", "verb.z.mean", "num.z.mean", "G.z.mean"), c("speed.z.mean",
+"memo.z.mean", "cap.z.mean", "fig.z.mean", "verb.z.mean", "num.z.mean",
+"G.z.mean")))
+
+diff <- as.data.frame(phil - oli)
+diff[upper.tri(diff)] <- NA
+diag(diff) <- NA
+```
+
+Diese Tabelle bildet die Differenz der (durchwegs signifikanten) Korrelationskoeffizienten zwischen Philipp's und Olivier's Datensatz ab.
+Negative Differenzen bedeuten, dass in Philipp's Daten tiefere Zusammenhänge beobachtet wurden als in Olivier's Daten (das Gegenteil ist der Fall bei
+positiven Differenzen).
+```{r, echo = FALSE}
+round(diff, digits = 2)
+```
+
+
+##1.3 Schlussfolgerungen
+* Olivier's Datensatz ist etwas heterogener als Philipp's Datensatz
+* Olivier's Datensatz zeigt deskriptiv eher höhere Zusammenhänge zwischen den Operationen bzw. Inhalten als Philipp's Datensatz
+
+
+#2 Messmodelle
+In diesem Kapitel folgen alle gerechneten Messmodelle. Oberhalb des gezeichneten Messmodells werden (wenn aufgetreten) mit hashtags (#) *warnings* aufgeführt. Diese Warnungen werden dann ausgegeben, wenn die Modellberechnungen nicht dem normalen Verlauf entsprechen. Unterhalb des gezeichneten Messmodell stehen  allgemeine Kommentare, Kommentare die sich nur auf Resultate aus Philipp's Datensatz beziehen, oder Kommentare die sich auf  Resultate aus  Olivier's Datensatz beziehen. In der Tabelle nach den Kommentaren sind die Modelltests bzw. die Fit-Indizes aufgeführt.  
+
+Die Abbildungen in diesem Kapitel stammen alle aus dem Datensatz von Philipp.
+
+##2.1 Model 1
+```{r, echo=FALSE, fig.align='center'}
+# .... 1.1 model specification -------------------------------------------------
+model1 <- 'g =~ zAN + zBD + zCH + zKW + zOG + zOE + zRZ + zSC + zST +
+                zTG + zTM + zWA + zWE + zWM + zXG + zZN + zZP + zZZ'
+
+# .... 1.2 fit -----------------------------------------------------------------
+model1Fit <- sem(model1,
+                 data      = resultsBIS,     
+                 estimator = "MLM",         
+                 mimic     = "Mplus") 
+
+
+
+semPaths(model1Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,             #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 3,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1)
+
+```
+
+* Philipp
+    + BD lädt nicht signifikant auf *g*
+    + OE lädt nicht signifikant auf *g*
+* Olivier
+    + alle Faktorladungen signifikant
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |        447 | 135  |  < .001 | .72 | .10 - .12 | .09  |             .79 |
+Olivier  |        490 | 135  |  < .001 | .74 | .10 - .12 | .09  |             .79 |
+
+
+\pagebreak
+
+##2.2 Model 2
+```{r, echo=FALSE, fig.align='center'}
+# .... 2.1 model specification -------------------------------------------------
+model2 <- 'speed    =~ zBD + s2*zOE + s3*zTG + s4*zKW + s5*zXG + s6*zRZ
+           memory   =~ zZZ + t2*zOG + t3*zWE + t4*zST + t5*zWM + t6*zZP
+           capacity =~ zSC + u2*zAN + u3*zCH + u4*zWA + u5*zTM + u6*zZN
+
+           s2 > 0.1; s3 > 0; s4 > 0; s5 > 0; s6 > 0
+           t2 > 0; t3 > 0; t4 > 0; t5 > 0; t6 > 0
+           u2 > 0; u3 > 0; u4 > 0; u5 > 0; u6 > 0
+
+           figural  =~ zBD + v2*zOE + v3*zOG + v4*zWE + v5*zAN + v6*zCH 
+           verbal   =~ zTM + w2*zTG + w3*zKW + w4*zST + w5*zWM + w6*zWA
+           numeric  =~ zSC + x2*zXG + x3*zRZ + x4*zZP + x5*zZZ + x6*zZN
+
+           v2 > 0; v3 > 0; v4 > 0.1; v5 > 0; v6 > 0.0
+           w2 > 0; w3 > 0; w4 > 0; w5 > 0; w6 > 0
+           x2 > 0; x3 > 0; x4 > 0; x5 > 0; x6 > 0
+
+           speed    ~~ 0*figural
+           speed    ~~ 0*verbal
+           speed    ~~ 0*numeric
+
+           memory   ~~ 0*figural
+           memory   ~~ 0*verbal
+           memory   ~~ 0*numeric
+
+           capacity ~~ 0*figural
+           capacity ~~ 0*verbal
+           capacity ~~ 0*numeric
+
+           # figural ~~ 0*verbal
+           # figural ~~ 0*numeric
+           # verbal  ~~ 0*numeric
+           
+           zAN ~~ a1*zAN; a1 > 0
+           zBD ~~ b1*zBD; b1 > 0
+           zCH ~~ c1*zCH; c1 > 0
+           zKW ~~ d1*zKW; d1 > 0
+           zOG ~~ e1*zOG; e1 > 0
+           zOE ~~ f1*zOE; f1 > .0
+           zRZ ~~ g1*zRZ; g1 > 0
+           zSC ~~ h1*zSC; h1 > 0
+           zST ~~ i1*zST; i1 > 0
+           zTG ~~ j1*zTG; j1 > 0
+           zTM ~~ k1*zTM; k1 > 0
+           zWA ~~ l1*zWA; l1 > 0
+           zWE ~~ m1*zWE; m1 > 0
+           zWM ~~ n1*zWM; n1 > 0
+           zXG ~~ o1*zXG; o1 > 0
+           zZN ~~ p1*zZN; p1 > 0
+           zZP ~~ q1*zZP; q1 > 0
+           zZZ ~~ r1*zZZ; r1 > 0
+           '
+
+# .... 2.2 fit -----------------------------------------------------------------
+model2Fit <- sem(model2,
+                 data      = resultsBIS,        
+                 estimator = "MLM",      
+                 mimic     = "Mplus")   
+
+
+
+# .... 2.5 Plotten -------------------------------------------------------------
+semPaths(model2Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 3,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)               #rotation of the whole model (1,2,3,4)
+```
+
+* Philipp
+    + Alle Ladungen und Fehlervarianzen mussten manuell > 0 gesetzt werden
+    + Kovarianzmatrix der latenten Variablen ist nicht positiv
+* Olivier
+    + Das Modell konvergiert ohne Fehlermeldung
+    + 3 Faktorladungen des Faktors *figural* **nicht** signifikant
+    + 1 Faktorladung des Faktors *numeric* **nicht** signifikant
+
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |        111 | 111  |     .49 |   1 | .00 - .03 | .06  |             .65 |
+Oliver   |        123 | 111  |     .20 | .99 | .00 - .04 | .04  |             .65 |
+
+\pagebreak
+
+
+
+##2.3 Model 3
+```{r, echo=FALSE, fig.align='center'}
+# .... 3.1 model specification -------------------------------------------------
+model3 <- 'g =~ speed + memory + capacity
+  
+            g ~~ 0*figural
+            g ~~ 0*verbal
+            g ~~ 0*numeric
+
+           speed    =~ zBD + s2*zOE + s3*zTG + s4*zKW + s5*zXG + s6*zRZ
+           memory   =~ zZZ + t2*zOG + t3*zWE + t4*zST + t5*zWM + t6*zZP
+           capacity =~ zSC + u2*zAN + u3*zCH + u4*zWA + u5*zTM + u6*zZN
+
+           s2 > 0.1; s3 > 0; s4 > 0; s5 > 0; s6 > 0
+           t2 > 0; t3 > 0; t4 > 0; t5 > 0; t6 > 0
+           u2 > 0; u3 > 0; u4 > 0; u5 > 0; u6 > 0
+
+           figural  =~ zBD + v2*zOE + v3*zOG + v4*zWE + v5*zAN + v6*zCH 
+           verbal   =~ zTM + w2*zTG + w3*zKW + w4*zST + w5*zWM + w6*zWA
+           numeric  =~ zSC + x2*zXG + x3*zRZ + x4*zZP + x5*zZZ + x6*zZN
+
+           v2 > 0; v3 > 0; v4 > 0.1; v5 > 0; v6 > 0.0
+           w2 > 0; w3 > 0; w4 > 0; w5 > 0; w6 > 0
+           x2 > 0; x3 > 0; x4 > 0; x5 > 0; x6 > 0
+
+           speed    ~~ 0*figural
+           speed    ~~ 0*verbal
+           speed    ~~ 0*numeric
+
+           memory   ~~ 0*figural
+           memory   ~~ 0*verbal
+           memory   ~~ 0*numeric
+
+           capacity ~~ 0*figural
+           capacity ~~ 0*verbal
+           capacity ~~ 0*numeric
+
+           # figural ~~ 0*verbal
+           # figural ~~ 0*numeric
+           # verbal  ~~ 0*numeric
+           
+           zAN ~~ a1*zAN; a1 > 0
+           zBD ~~ b1*zBD; b1 > 0
+           zCH ~~ c1*zCH; c1 > 0
+           zKW ~~ d1*zKW; d1 > 0
+           zOG ~~ e1*zOG; e1 > 0
+           zOE ~~ f1*zOE; f1 > .0
+           zRZ ~~ g1*zRZ; g1 > 0
+           zSC ~~ h1*zSC; h1 > 0
+           zST ~~ i1*zST; i1 > 0
+           zTG ~~ j1*zTG; j1 > 0
+           zTM ~~ k1*zTM; k1 > 0
+           zWA ~~ l1*zWA; l1 > 0
+           zWE ~~ m1*zWE; m1 > 0
+           zWM ~~ n1*zWM; n1 > 0
+           zXG ~~ o1*zXG; o1 > 0
+           zZN ~~ p1*zZN; p1 > 0
+           zZP ~~ q1*zZP; q1 > 0
+           zZZ ~~ r1*zZZ; r1 > 0
+           '
+
+# .... 3.2 fit -----------------------------------------------------------------
+model3Fit <- sem(model3,
+                 data      = resultsBIS,        
+                 estimator = "MLM",      
+                 mimic     = "Mplus")   
+
+
+# .... 3.5 Plotten -------------------------------------------------------------
+semPaths(model3Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 3,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)               #rotation of the whole model (1,2,3,4)
+```
+
+* Philipp
+    + Alle Ladungen und Fehlervarianzen mussten manuell > 0 gesetzt werden, um Fehlermeldungen zu unterdrücken
+    + Kovarianzmatrix der latenten Variablen ist nicht positiv
+    + Faktorladung *g* =~ *speed* > 1
+* Olivier
+    + Das Modell konvergiert ohne Fehlermeldung
+    + 3 Faktorladungen auf *figural* **nicht** signifikant
+    + 1 Faktorladung auf *numeric* **nicht** signifikant
+
+
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |        117 | 111  |     .33 | .99 | .00 - .04 | .06  |             .65 |
+Olivier  |        123 | 111  |     .20 | .99 | .00 - .04 | .04  |             .65 |
+
+\pagebreak
+
+
+##2.4 Model 4
+```{r, echo=FALSE, fig.align='center'}
+# .... 4.1 model specification -------------------------------------------------
+model4 <- 'g    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric +
+                   zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric +
+                    zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+          '
+          
+
+# .... 4.2 fit -----------------------------------------------------------------
+model4Fit <- sem(model4,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+
+# .... 4.5 Plotten -------------------------------------------------------------
+semPaths(model4Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)  
+
+```
+
+* Philipp
+    + Alle Faktorladungen sind **nicht** signifikant
+    + Varianz von *g* ist **nicht** signifikant
+* Olivier
+    + Alle Faktorladungen signifikant
+    + Varianz von *g* ist signifikant
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |        154 |  27  |  < .001 | .80 | .13 - .18 | .08  |             .60 |
+Olivier  |        165 |  27  |  < .001 | .81 | .13 - .17 | .07  |             .60 |
+
+\pagebreak
+
+
+
+##2.5 Model 5
+```{r, echo=FALSE, fig.align='center'}
+# .... 5.1 model specification -------------------------------------------------
+model5 <- 'speed    =~ zSpeedFigural    + j1*zSpeedVerbal    + j2*zSpeedNumeric
+          memory   =~ zMemoryFigural   + k1*zMemoryVerbal   + k2*zMemoryNumeric
+          capacity =~ zCapacityFigural + l1*zCapacityVerbal + l2*zCapacityNumeric
+          
+          figural =~ zSpeedFigural + m1*zMemoryFigural + m2*zCapacityFigural
+          verbal  =~ zSpeedVerbal + n1*zMemoryVerbal + n2*zCapacityVerbal
+          numeric =~ zSpeedNumeric + o1*zMemoryNumeric + o2*zCapacityNumeric
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          speed ~~ p1*memory     ; p1 > 0
+          speed ~~ q1*capacity   ; q1 > 0
+          memory ~~ r1*capacity  ; r1 > 0
+
+
+          speed ~~ 0*figural
+          speed ~~ 0*verbal
+          speed ~~ 0*numeric
+
+          memory ~~ 0*figural
+          memory ~~ 0*verbal
+          memory ~~ 0*numeric
+
+          capacity ~~ 0*figural
+          capacity ~~ 0*verbal
+          capacity ~~ 0*numeric
+
+          # figural ~~ 0*verbal
+          # figural ~~ 0*numeric
+          # verbal ~~ 0*numeric
+          
+          
+zSpeedFigural ~~ a1* zSpeedFigural; a1 > 0
+zSpeedVerbal  ~~ b1* zSpeedVerbal; b1 > 0
+zSpeedNumeric ~~ c1* zSpeedNumeric; c1 > 0
+
+zMemoryFigural ~~ d1* zMemoryFigural; d1 > 0
+zMemoryVerbal  ~~ e1* zMemoryVerbal; e1 > 0
+zMemoryNumeric ~~ f1* zMemoryNumeric; f1 > 0
+
+zCapacityFigural ~~ g1* zCapacityFigural; g1 > 0
+zCapacityVerbal  ~~ h1* zCapacityVerbal; h1 > 0
+zCapacityNumeric ~~ i1* zCapacityNumeric; i1 > 0'
+
+
+# .... 5.2 fit -----------------------------------------------------------------
+model5Fit <- sem(model5,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+
+# .... 5.5 Plotten -------------------------------------------------------------
+semPaths(model5Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)  
+
+```
+
+* Philipp
+    + Modell konvergiert nicht
+* Olivier
+    + Negative Fehlervarianzen
+    + diverse Faktorladungen **nicht** signifikant
+    + diverse Varianzen **nicht** signifikant
+
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |          - |    - |       - |   - |         - |    - |               - |
+Olivier  |          8 |  12  |     .08 |   1 | .00 - .04 | .02  |             .27 |
+
+\pagebreak
+
+
+
+
+##2.6 Model 6
+```{r, echo=FALSE, fig.align='center'}
+# .... 6.1 model specification -------------------------------------------------
+model6 <- '
+          g =~ speed + memory + capacity
+          
+          g ~~ 0*figural
+          g ~~ 0*verbal
+          g ~~ 0*numeric
+          
+          speed    =~ zSpeedFigural    + j1*zSpeedVerbal    + j2*zSpeedNumeric
+          memory   =~ zMemoryFigural   + k1*zMemoryVerbal   + k2*zMemoryNumeric
+          capacity =~ zCapacityFigural + l1*zCapacityVerbal + l2*zCapacityNumeric
+
+          speed ~~ 0*memory
+          speed ~~ 0*capacity
+          memory ~~ 0*capacity
+          
+          figural =~ zSpeedFigural + m1*zMemoryFigural + m2*zCapacityFigural
+          verbal  =~ zSpeedVerbal + n1*zMemoryVerbal + n2*zCapacityVerbal
+          numeric =~ zSpeedNumeric + o1*zMemoryNumeric + o2*zCapacityNumeric
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          # speed ~~ p1*memory     ; p1 > 0
+          # speed ~~ q1*capacity   ; q1 > 0
+          # memory ~~ r1*capacity  ; r1 > 0
+
+
+          speed ~~ 0*figural
+          speed ~~ 0*verbal
+          speed ~~ 0*numeric
+
+          memory ~~ 0*figural
+          memory ~~ 0*verbal
+          memory ~~ 0*numeric
+
+          capacity ~~ 0*figural
+          capacity ~~ 0*verbal
+          capacity ~~ 0*numeric
+
+          # figural ~~ 0*verbal
+          # figural ~~ 0*numeric
+          # verbal ~~ 0*numeric
+          
+          
+          zSpeedFigural ~~ a1* zSpeedFigural; a1 > 0
+          zSpeedVerbal  ~~ b1* zSpeedVerbal; b1 > 0
+          zSpeedNumeric ~~ c1* zSpeedNumeric; c1 > 0
+          
+          zMemoryFigural ~~ d1* zMemoryFigural; d1 > 0
+          zMemoryVerbal  ~~ e1* zMemoryVerbal; e1 > 0
+          zMemoryNumeric ~~ f1* zMemoryNumeric; f1 > 0
+          
+          zCapacityFigural ~~ g1* zCapacityFigural; g1 > 0
+          zCapacityVerbal  ~~ h1* zCapacityVerbal; h1 > 0
+          zCapacityNumeric ~~ i1* zCapacityNumeric; i1 > 0'
+
+
+# .... 6.2 fit -----------------------------------------------------------------
+model6Fit <- sem(model6,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+
+# .... 6.5 Plotten -------------------------------------------------------------
+semPaths(model6Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)  
+
+```
+
+* Philipp
+    + Kovarianzmatrix der latenten Variablen ist **nicht** positiv
+    + Fehlermatrix ist **nicht** positiv (obwohl manuell > 0 gesetzt)
+    + *memory* & *capacity* laden **nicht** signifikant auf *g*
+    + zCapacityVerbal lädt **nicht** signifikant auf *capacity*
+    + *g* Varianz ist **nicht** signifikant
+    + *speed* Varianz ist **nicht** signifikant
+    + *capacity* Varianz ist **nicht** signifikant
+* Olivier
+    + nicht gerechnet, weil Modell 5 schon nicht gut fitted
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |          5 |   12 |     .95 |   1 | .00 - .00 | .02  |             .27 |
+Olivier  |          - |   12 |       - |   - |         - |   -  |               - |
+
+\pagebreak
+
+
+
+
+##2.7 Model 7
+```{r, echo=FALSE, warning=FALSE, fig.align='center'}
+# .... 7.1 model specification -------------------------------------------------
+model7 <- '
+          g =~ figural + verbal + numeric
+          
+          g ~~ 0*speed
+          g ~~ 0*memory
+          g ~~ 0*capacity
+          
+          speed    =~ zSpeedFigural    + j1*zSpeedVerbal    + j2*zSpeedNumeric
+          memory   =~ zMemoryFigural   + k1*zMemoryVerbal   + k2*zMemoryNumeric
+          capacity =~ zCapacityFigural + l1*zCapacityVerbal + l2*zCapacityNumeric
+
+          figural ~~ 0*verbal
+          figural ~~ 0*numeric
+          verbal ~~ 0*numeric
+          
+          figural =~ zSpeedFigural + m1*zMemoryFigural + m2*zCapacityFigural
+          verbal  =~ zSpeedVerbal + n1*zMemoryVerbal + n2*zCapacityVerbal
+          numeric =~ zSpeedNumeric + o1*zMemoryNumeric + o2*zCapacityNumeric
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          j1 > 0; j2 > 0
+          k1 > 0; k2 > 0
+          l1 > 0; l2 > 0
+
+          # speed ~~ p1*memory     ; p1 > 0
+          # speed ~~ q1*capacity   ; q1 > 0
+          # memory ~~ r1*capacity  ; r1 > 0
+
+
+          speed ~~ 0*figural
+          speed ~~ 0*verbal
+          speed ~~ 0*numeric
+
+          memory ~~ 0*figural
+          memory ~~ 0*verbal
+          memory ~~ 0*numeric
+
+          capacity ~~ 0*figural
+          capacity ~~ 0*verbal
+          capacity ~~ 0*numeric
+
+          # figural ~~ 0*verbal
+          # figural ~~ 0*numeric
+          # verbal ~~ 0*numeric
+          
+          
+          zSpeedFigural ~~ a1* zSpeedFigural; a1 > 0
+          zSpeedVerbal  ~~ b1* zSpeedVerbal; b1 > 0
+          zSpeedNumeric ~~ c1* zSpeedNumeric; c1 > 0
+          
+          zMemoryFigural ~~ d1* zMemoryFigural; d1 > 0
+          zMemoryVerbal  ~~ e1* zMemoryVerbal; e1 > 0
+          zMemoryNumeric ~~ f1* zMemoryNumeric; f1 > 0
+          
+          zCapacityFigural ~~ g1* zCapacityFigural; g1 > 0
+          zCapacityVerbal  ~~ h1* zCapacityVerbal; h1 > 0
+          zCapacityNumeric ~~ i1* zCapacityNumeric; i1 > 0'
+
+# .... 7.2 fit -----------------------------------------------------------------
+model7Fit <- sem(model7,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 7.5 Plotten -------------------------------------------------------------
+semPaths(model7Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = 1e-100,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)  
+```
+
+* Philipp
+    + (*warnings* wurden manuell unterdrückt, weil sonst der output zu lang wäre)
+    + Scaled test statistic (MLM) kann nicht berechnet werden
+    + **standard errors können nicht berechnet werden** (d.h. *p*-Werte der Parameter sind nicht vorhanden)
+    + Aufgrund fehlender *p*-Werte wird die Abbildung nicht vollständig geplotted
+    + Kovarianzmatrix der latenten Variablen ist nicht positiv
+* Olivier
+    + nicht gerechnet, weil Modell 5 nicht gut fitted
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |          7 |  12  |     .86 |   1 | .00 - .04 | .02  |             .27 |
+Olivier  |          - |  12  |       - |   - |         - |    - |               - |
+
+\pagebreak
+
+
+
+
+##2.8 Model 8
+```{r, echo=FALSE, fig.align='center'}
+model8 <- 'speed    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric
+           memory   =~ zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric
+           capacity =~ zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+          
+           zSpeedNumeric  ~~ zMemoryNumeric
+           zSpeedNumeric  ~~ zCapacityNumeric
+           zMemoryNumeric ~~ zCapacityNumeric
+
+           zSpeedFigural  ~~ zMemoryFigural
+           zSpeedFigural  ~~ zCapacityFigural
+           zMemoryFigural ~~ zCapacityFigural
+
+           zSpeedVerbal  ~~ zMemoryVerbal
+           zSpeedVerbal  ~~ zCapacityVerbal
+           zMemoryVerbal ~~ zCapacityVerbal
+           '
+
+
+# .... 8.2 fit -----------------------------------------------------------------
+model8Fit <- sem(model8,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 8.5 Plotten -------------------------------------------------------------
+semPaths(model8Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)
+```
+
+* *Bemerkung zum Modell*: Gleiche Inhalte unterschiedlicher Operationen sind korrliert
+* Philipp
+    + *speed* Varianz **nicht** signifikant
+    + zSpeedNumeric lädt **nicht** signifikant auf *speed*
+    + Nicht alle Residualvarianzen sind signifikant miteinander korreliert
+* Olivier
+    + *speed* Varianz signifikant (*capacity* und *memory* auch)
+    + Nicht alle Residualvarianzen sind signifikant miteinander korreliert
+
+
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |         40 |  15  |   < .01 | .96 | .06 - .13 | .04  |             .33 |
+Olivier  |         24 |  15  |     .06 | .99 | .00 - .09 | .03  |             .33 |
+
+\pagebreak
+
+
+
+
+##2.9 Model 9
+```{r, echo=FALSE, fig.align='center'}
+model9 <- 'g =~ speed + memory + capacity
+
+
+           speed    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric
+           memory   =~ zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric
+           capacity =~ zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+
+           speed ~~ a1*speed; a1 > .00001
+          
+           zSpeedNumeric  ~~ zMemoryNumeric
+           zSpeedNumeric  ~~ zCapacityNumeric
+           zMemoryNumeric ~~ zCapacityNumeric
+
+           zSpeedFigural  ~~ zMemoryFigural
+           zSpeedFigural  ~~ zCapacityFigural
+           zMemoryFigural ~~ zCapacityFigural
+
+           zSpeedVerbal  ~~ zMemoryVerbal
+           zSpeedVerbal  ~~ zCapacityVerbal
+           zMemoryVerbal ~~ zCapacityVerbal
+           '
+
+
+# .... 9.2 fit -----------------------------------------------------------------
+model9Fit <- sem(model9,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 9.5 Plotten -------------------------------------------------------------
+semPaths(model9Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)
+
+```
+
+
+* *Bemerkung zum Modell*: Gleiche Inhalte unterschiedlicher Operationen sind korrliert (vgl. Modell 8)
+* Philipp
+    + *g* Varianz **nicht** signifikant (*memory* und *speed* laden nicht signifikant)
+    + Nicht alle Residualvarianzen sind signifikant miteinander korreliert
+* Olivier
+    + alle Faktorladungen signifikant (folglich auch *g* Varianz)
+    + Nicht alle Residualvarianzen sind signifikant miteinander korreliert
+    
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |         39 |  15  |   < .01 | .96 | .06 - .12 | .04  |             .33 |
+Olivier  |         24 |  15  |     .06 | .99 | .00 - .09 | .03  |             .33 |
+
+\pagebreak
+
+
+
+
+##2.10 Model 10
+```{r, echo=FALSE, fig.align='center'}
+# .... 10.1 model specification -------------------------------------------------
+model10 <- '
+           speed    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric
+           memory   =~ zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric
+           capacity =~ zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+
+           
+           # zSpeedNumeric  ~~ zMemoryNumeric
+           zSpeedNumeric  ~~ zCapacityNumeric
+           # zMemoryNumeric ~~ zCapacityNumeric
+
+           # zSpeedFigural  ~~ zMemoryFigural
+           # zSpeedFigural  ~~ zCapacityFigural
+           zMemoryFigural ~~ zCapacityFigural
+
+           zSpeedVerbal  ~~ zMemoryVerbal
+           zSpeedVerbal  ~~ zCapacityVerbal
+           zMemoryVerbal ~~ zCapacityVerbal
+            
+            #zusätzliche Covarianzen
+            zSpeedVerbal ~~ zCapacityFigural
+            zSpeedNumeric ~~  zCapacityVerbal
+            zSpeedFigural ~~  zCapacityVerbal
+         '
+
+# .... 10.2 fit -----------------------------------------------------------------
+model10Fit <- sem(model10,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 10.5 Plotten -------------------------------------------------------------
+semPaths(model10Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE) 
+```
+
+* Im Vergleich zu Modell 8 wurden folgende Covarianzen unterdrückt, weil sie in Model 8 nicht signifikant waren:
+    + zSpeedNumeric  ~~ zMemoryNumeric
+    + zMemoryNumeric ~~ zCapacityNumeric
+    + zSpeedFigural  ~~ zMemoryFigural
+    + zSpeedFigural  ~~ zCapacityFigural
+* Im Vergleich zu Modell 8 wurden folgende Covarianzen erlaubt, weil die Modifikationsindizes hoch waren:
+    + zSpeedVerbal ~~ zCapacityFigural
+    + zSpeedNumeric ~~  zCapacityVerbal
+    + zSpeedFigural ~~  zCapacityVerbal
+* *speed* Varianz **nicht** signifikant
+* *speed* und *memory* korrelieren **nicht** signifikant miteinander
+* Olivier hat Modell (noch) nicht gerechnet
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |         21 |  16  |     .16 | .99 | .00 - .08 | .04  |             .36 |
+Olivier  |          - |  16  |       - |   - |         - |   -  |                 |
+
+\pagebreak
+
+
+
+
+##2.11 Model 11
+```{r, echo=FALSE, fig.align='center'}
+# .... 11.1 model specification -------------------------------------------------
+model11 <- 'g =~ speed + memory + capacity
+
+           speed    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric
+           memory   =~ zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric
+           capacity =~ zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+
+          speed ~~ a1*speed; a1 > .0001
+
+           
+           # zSpeedNumeric  ~~ zMemoryNumeric
+           zSpeedNumeric  ~~ zCapacityNumeric
+           # zMemoryNumeric ~~ zCapacityNumeric
+
+           # zSpeedFigural  ~~ zMemoryFigural
+           # zSpeedFigural  ~~ zCapacityFigural
+           zMemoryFigural ~~ zCapacityFigural
+
+           zSpeedVerbal  ~~ zMemoryVerbal
+           zSpeedVerbal  ~~ zCapacityVerbal
+           zMemoryVerbal ~~ zCapacityVerbal
+
+          #zusätzliche Covarianzen
+          zSpeedVerbal ~~ zCapacityFigural
+          zSpeedNumeric ~~  zCapacityVerbal
+          zSpeedFigural ~~  zCapacityVerbal
+                     '
+
+# .... 11.2 fit -----------------------------------------------------------------
+model11Fit <- sem(model11,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 11.5 Plotten -------------------------------------------------------------
+semPaths(model11Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE) 
+```
+
+* Im Vergleich zu Modell 9 wurden folgende Covarianzen unterdrückt, weil sie in Model 8 nicht signifikant waren::
+    + zSpeedNumeric  ~~ zMemoryNumeric
+    + zMemoryNumeric ~~ zCapacityNumeric
+    + zSpeedFigural  ~~ zMemoryFigural
+    + zSpeedFigural  ~~ zCapacityFigural
+* Im Vergleich zu Modell 9 wurden folgende Covarianzen erlaubt, weil die Modifikationsindizes hoch waren::
+    + zSpeedVerbal ~~ zCapacityFigural
+    + zSpeedNumeric ~~  zCapacityVerbal
+    + zSpeedFigural ~~  zCapacityVerbal
+* *g* Varianz **nicht** signifikant (*memory* und *capacity* laden nicht signifikant)
+* Olivier hat Modell (noch) nicht gerechnet
+
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |         22 |  16  |     .16 | .99 | .00 - .08 | .04  |             .36 |
+Olivier  |          - |  16  |       - |   - |         - |    - |                 |
+
+\pagebreak
+
+
+
+
+##2.14 Model 14
+```{r, echo=FALSE, fig.align='center'}
+# .... 14.1 model specification -------------------------------------------------
+model14 <- 'g =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric +
+                zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric +
+                zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+
+               speed    =~ zSpeedFigural    + zSpeedVerbal    + zSpeedNumeric
+               memory   =~ zMemoryFigural   + zMemoryVerbal   + zMemoryNumeric
+               capacity =~ zCapacityFigural + zCapacityVerbal + zCapacityNumeric
+
+                g ~~ 0*speed
+                g ~~ 0*memory
+                g ~~ 0*capacity
+
+                speed ~~ 0*memory
+                speed ~~ 0*capacity
+                memory ~~ 0*capacity
+                '
+
+
+# .... 14.2 fit -----------------------------------------------------------------
+model14Fit <- sem(model14,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 14.5 Plotten -------------------------------------------------------------
+semPaths(model14Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE)
+
+```
+
+* Philipp
+    + Modell konvergiert nicht
+* Olivier
+    + Modell konvergiert nicht
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |          - |    - |       - |   - |         - |    - |                 |
+Olivier  |          - |    - |       - |   - |         - |    - |                 |
+
+\pagebreak
+
+##2.15 Model 15
+```{r, echo=FALSE, fig.align='center'}
+# .... 15.1 model specification -------------------------------------------------
+model15 <- 'g =~ zSpeed + zMemory + zCapacity'
+
+
+# .... 15.2 fit -----------------------------------------------------------------
+model15Fit <- sem(model15,
+                data      = resultsBIS,        #Datensatz mit den in sem.model verwendeten Variablen
+                estimator = "MLM",      #Schätzmethode ist die robuste Variante von ML
+                mimic     = "Mplus")    #man kann den Output von Mplus (default ist EQS)
+
+# .... 15.5 Plotten -------------------------------------------------------------
+semPaths(model15Fit,
+         what           = "std",           #std, or est
+         style          = "lisrel",        #lisrel, or mx
+         layout         = "tree",          #tree, circle, or spring
+         structural     = F,               #or T for structural model only
+         cut            = .60,            #cut the scaling of the paths (edges) at this value
+         residScale     = 7,               #size of residual paths (edges)
+         sizeMan        = 6,               #size of the manifest variables
+         sizeLat        = 5,               #size of the latent variables
+         intercepts     = F,               #should intercepts be included?
+         optimizeLatRes = T,               #angle of the incoming residuals is optimized
+         exoVar         = T,               #should variances of exo variables be plotted?
+         nCharNodes     = 0,               #number of characters to abbreviate node labels
+         asize          = 1.5,             #arrow head size
+         esize          = 1,               #arrow wheight
+         edge.color     = 1,               #path (edge) color (1-255)
+         edge.label.cex = .5,              #path (edge) label size
+         cardinal       = F,               #or T for arrows pointing in the middle of a variable
+         nDigits        = 2,               #number of digits for coeffiecients
+         rotation       = 1,
+         reorder = FALSE) 
+```
+
+* Genau identifizertes Modell - kein Hypothesentest möglich
+
+Daten    | Chi-Square | df   |     *p* | CFI |   RMSEA   | SRMR | parsimony ratio |
+-------- | ---------- | ---- | ------- | --- | --------- | ---- | --------------- |
+Philipp  |          0 |    0 |      NA |   1 | .00 - .00 |    0 |               0 |
+Olivier  |          0 |    0 |      NA |   1 | .00 - .00 |    0 |               0 |
+
+\pagebreak
+
+
+#3 Vergleich der Messmodelle
+##3.1 Philipp's Datensatz
+
+ Modell | Chi-Square |  df |    *p* | CFI |   RMSEA   | SRMR | Probleme Philipp | Probleme Olivier |
+------- | ---------- | --- | ------ | --- | --------- | ---- | ---------------- | ---------------- |
+      1 |        447 | 135 | < .001 | .72 | .10 - .12 |  .09 |               ja |             nein |
+      2 |        111 | 111 |    .49 |   1 | .00 - .03 |  .06 |               ja |             jein |
+      3 |        117 | 111 |    .33 | .99 | .00 - .04 |  .06 |               ja |             jein |
+      4 |        154 |  27 | < .001 | .80 | .13 - .18 |  .08 |               ja |             nein |
+      5 |          - |   - |      - |   - |         - |    - |               ja |               ja |
+      6 |          5 |  12 |    .95 |   1 | .00 - .00 |  .02 |               ja |                - |
+      7 |          7 |  12 |    .86 |   1 | .00 - .04 |  .02 |               ja |                - |
+      8 |         40 |  15 |  < .01 | .96 | .06 - .13 |  .04 |               ja |             nein |
+      9 |         39 |  15 |  < .01 | .96 | .06 - .12 |  .04 |               ja |             nein |
+     10 |         21 |  16 |    .16 | .99 | .00 - .08 |  .04 |               ja |                - |
+     11 |         22 |  16 |    .16 | .99 | .00 - .08 |  .04 |               ja |                - |
+     14 |          - |   - |      - |   - |         - |    - |               ja |               ja |
+     15 |          0 |   0 |     NA |   1 | .00 - .00 |    0 |                - |                - |
+
+##3.2 Olivier's Datensatz
+
+ Modell | Chi-Square |  df |    *p* | CFI |   RMSEA   | SRMR | Probleme Philipp | Probleme Olivier |
+------- | ---------- | --- | ------ | --- | --------- | ---- | ---------------- | ---------------- |
+      1 |        490 | 135 | < .001 | .74 | .10 - .12 |  .09 |               ja |             nein |
+      2 |        123 | 111 |    .20 | .99 | .00 - .04 |  .04 |               ja |             jein |
+      3 |        123 | 111 |    .20 | .99 | .00 - .04 |  .04 |               ja |             jein |
+      4 |        165 |  27 | < .001 | .81 | .13 - .17 |  .07 |               ja |             nein |
+      5 |          8 |  12 |    .08 |   1 | .00 - .04 |  .02 |               ja |               ja |
+      6 |          - |   - |      - |   - |         - |    - |               ja |                - |
+      7 |          - |   - |      - |   - |         - |    - |               ja |                - |
+      8 |         24 |  15 |    .06 | .99 | .00 - .09 |  .03 |               ja |             nein |
+      9 |         24 |  15 |    .06 | .99 | .00 - .09 |  .03 |               ja |             nein |
+     10 |          - |   - |      - |   - |         - |    - |               ja |                - |
+     11 |          - |   - |      - |   - |         - |    - |               ja |                - |
+     14 |          - |   - |      - |   - |         - |    - |               ja |               ja |
+     15 |          0 |   0 |     NA |   1 | .00 - .00 |    0 |                - |                - |
+
+##3.3 Schlussfolgerungen aus den Modelltests
+* Modelle ~~5~~, ~~6~~, ~~7~~, ~~10~~, ~~11~~ und ~~14~~ führen in beiden Datensätzen zu nicht interpretierbaren Lösungen
+* Modelle 1 -- 5, 8 und 9 führen in Olivier's Datensatz zu interpretierbaren Lösungen, in Philipp's Datensatz  nicht
+
+\pagebreak
+
+
+#4 Stabilität der *g* Faktorwerte
+Um zu sehen, wie die *g* Faktorwerte durch die Modellierungsvarianten beeinflusst werden, haben wir die *g* Faktorwerte
+aller Personen derjenigen Modelle extrahiert, die einen *g* Faktor beinhalten. Das sind Modelle 1, 3, 4, 6, 7, 9, 11, 14 und 15.  
+
+Anschliessend haben wir den über alle 18 Subtests gemittelten z-Wert jeder Person, *zTotal*, mit den extrahierten *g* Faktorwerten
+korreliert.
+
+##4.1 Philipp's Datensatz
+Hier abgebildet ist eine Visualisierung der Zusammenhänge der extrahierten *g* Faktorwerte aus Philipp's Datensatz.  
+
+```{r, echo=FALSE, warning=FALSE}
+dat <- data.frame(matrix(0,nrow(resultsBIS),0))
+
+dat$model1  <- predict(model1Fit)
+dat$model3  <- predict(model3Fit)[,1]
+dat$model4  <- predict(model4Fit)
+dat$model6  <- predict(model6Fit)[,1]
+dat$model7  <- predict(model7Fit)[,1]
+dat$model9  <- predict(model9Fit)[,1]
+
+dat$model11 <- predict(model11Fit)[,1]
+dat$model14 <- predict(model14Fit)[,1]
+dat$model15 <- predict(model15Fit)
+dat$zTotal <- resultsBIS$zTotal
+
+library(corrplot)
+x <- cor(dat)
+par(mar=c(6, 6, 6, 6))
+
+corrplot(x,
+         order = "original",
+         type = "upper",
+         diag = TRUE,
+         addCoef.col = "white",
+         insig = "blank",
+         tl.srt=25,
+         tl.col="black",
+         tl.cex = .6,
+         cl.cex = .6)
+
+```
+
+\pagebreak
+
+##4.2 Oliviers's Datensatz
+Und hier eine Visualisierung der Zusammenhänge der extrahierten *g* Faktorwerte aus Olivier' Datensatz. **Achtung**: Die hellen
+Zellen sind deshalb leer, weil Olivier nicht jedes der Messmodelle (1-15) gerechnet hat (d.h. für diese Modelle sind keine Faktorwerte
+vorhanden).
+
+```{r, echo=FALSE, warning=FALSE, fig.height=5}
+oliFactorScores <- structure(list(`model1` = structure(c(0.144475464118902, 0.832346144925253,
+0.545685597021665, -0.656472091628471, -0.22725784014486, -0.706820978456709,
+0.220602545401287, 0.243988396530585, -0.0238645152180023, -0.238824369684793,
+0.398705906623791, 0.312710400690861, 0.158529882985751, -0.626413280916226,
+-0.455920551579995, 0.513046013966035, -0.405024624690887, -0.644397531365401,
+0.633571437343367, 0.47996336991012, -0.194290250007262, 0.187613518402161,
+0.241748475913042, -0.972492810293825, 0.568517371527781, 0.0912514069916797,
+0.554537132284985, 0.721830213703447, 0.00627064647197229, -0.327014230033572,
+0.298171467003119, -0.674700429015604, 0.633765051900293, 0.869339796257896,
+-0.204887177628142, 0.857880405491095, 0.996499309187208, -0.0732680629660346,
+-0.137320630767779, 0.143514613534191, 0.509690364721273, -0.276188199318643,
+0.344317686282468, -0.794710730525419, 0.163279876977748, 0.174221408632261,
+0.0325441749000947, 0.806718443879165, 0.612878190508596, 0.456462544018015,
+-0.18042249808361, -0.385819839212283, 0.345054204824121, 0.856814184682578,
+-0.247443614142209, -0.447657420058755, -0.0875530318187228,
+-0.215219863670748, -0.3176877998317, 0.488114794741771, -0.961698707465506,
+0.75376287948475, -0.493289618941416, 0.38432378718288, -0.103612029042534,
+0.154773830456586, 0.645602881177751, 0.265255998624478, 0.180786828525733,
+0.435699528280777, 0.333778754934093, 0.891188370575496, 0.241759299773184,
+-0.119906336363424, -0.199479418690483, 0.310147817813793, -0.865609641769297,
+-0.167952413193655, 0.403037524365799, 0.106821712744365, -0.412469303248091,
+-0.275297051381252, -0.574531355537953, 0.080665474559997, -0.52410656726538,
+-0.0285384757237203, -0.293016935850743, 0.921496669376069, -0.556046004362551,
+-0.260340527040237, -0.173634197393349, -0.4040057295209, -0.666890466386727,
+-0.515330449429021, 0.401976608913093, -0.290604343616617, -0.790499980022614,
+-0.0584714192268934, -0.324328759229429, -0.457947716978485,
+-0.639639533893532, -0.463564713712397, -0.677074823331494, 0.163851908957108,
+0.865622908380415, -0.0448571196524962, -0.884380850599647, -0.0030772653707346,
+-0.261662681325339, -0.791783492208611, -0.179115083771194, -0.422719638372658,
+0.043254835613413, -0.234692407388743, -0.431916354168307, -0.301340081272576,
+-0.247849814800831, -0.381265693173104, 0.460531103542397, 0.304774959841756,
+0.141675859105214, -0.674585304843415, 0.244216329306959, 0.13597539047245,
+-0.826754056927895, -0.167881114649937, -0.160690167163811, 0.0686409386978423,
+-0.501603452538497, -0.205383543791386, -0.250741650837753, -0.77766054511754,
+-0.486012912178355, -0.238914639373927, 0.0160664090292698, -0.418421533550968,
+-0.992416745001207, 0.159388369786108, 0.539461621312888, 1.00681323554342,
+-0.725846330201036, -0.759392783117334, -0.0399462343593229,
+0.18160295879174, -0.430925128210299, -0.119958160332262, -0.904124113387575,
+0.05964876403606, -0.0775596334446034, -0.0732445784485817, 0.240324799612088,
+-0.0217844254203032, 0.288231228877566, -0.862842895630457, 0.133536368265855,
+-0.343792547505896, -0.431504721943235, -0.625072834504277, 0.88626001924851,
+0.114458751530143, 0.87213162173642, -0.601772595883351, -0.0538349778162932,
+0.145551860444864, 0.0652210267454971, -0.994197411885458, -1.10641835989156,
+-0.199137545762126, -0.314185255792412, 1.1024972439801, -0.437231118482699,
+1.50806566548857, 0.587021375963711, 0.870569503801108, 0.396898166954944,
+0.87454884605232, 1.48859577767141, 0.286989657795956, -0.353102418171774,
+0.496420423592601, -0.0546810400463891, -0.248310870553979, -0.333967561196116,
+0.953392236584482, 0.438283446186104, 0.306512784376756, 0.620401330712557,
+0.89514755469251, -0.188658783891592, 0.171154339347038, 0.246077181739685,
+0.0100979538881174, -0.427584972957451, -0.837649475944494, 0.0349732774598201,
+-0.997194573653761, 0.2179894535857, -0.0885023328119839, 0.14233691978973,
+0.0386724802720894, -0.700875351898897, -0.137472211194816, 1.14162998791162,
+0.00853523818288191, -0.700786333866367, 0.707009979087325, 0.797988443503217,
+0.573377508340873, 0.766649879844864, 0.327592961911944, 1.42604663001507,
+0.473631427301099, 1.27536940112632, -0.162957179218901, 0.180695428850144,
+-0.487528640626097, -0.847909964081142, -0.0301623428292422,
+-0.619988826970176, 0.000608064841934493, 1.04404144327159, 0.22618319127284,
+0.309408650962727, 0.481555513282395, 0.700144769406797, -0.848051850196205,
+-1.46509466813093, -0.39743954604175, -0.321977743830387, -0.311374189410687,
+-0.830766249771843), .Dim = c(231L, 1L), .Dimnames = list(NULL,
+    "BIS_g"), class = c("lavaan.matrix", "matrix")), `model3` = c(0.231152946088918,
+0.412018480751831, 0.443873913985175, -0.382930238262453, -0.0809969048493706,
+-0.422757067956271, 0.0231963925259421, 0.256620637407362, -0.128240185224805,
+-0.136943037399917, 0.143743710108901, 0.231978921725258, 0.107328431219974,
+-0.434087603040418, -0.179268376826555, 0.257744553366639, -0.212525513716188,
+-0.486228582631003, 0.480809678162593, 0.424658700072581, -0.125166540338126,
+0.156911489742433, 0.0970402786160367, -0.615598057703638, 0.451678532874013,
+0.0768770252045047, 0.194978433927187, 0.506729366889612, -0.339902952066427,
+-0.0985903822228598, 0.269653757955553, -0.562721949236237, 0.308654895839402,
+0.491543053895669, -0.0731922172909537, 0.643062142376654, 0.570911893203193,
+-0.0889785253320222, -0.269573212605605, -0.0612626784711351,
+0.290625943329922, -0.434972238108252, 0.0887490021406177, -0.629761583994326,
+0.0965958937772667, -0.0667243508439333, 0.0213663851922689,
+0.370278243842727, 0.305237407291624, 0.343421855942552, -0.0727824070285852,
+-0.0879923059064805, 0.131890615095941, 0.549430276420668, -0.204358204807446,
+-0.216021690602322, -0.244452085173714, -0.0535850868109497,
+-0.324495183791106, 0.31911396877768, -0.69759375758462, 0.628394328188804,
+-0.351602698172944, -0.0437692773569478, 0.0581060273274515,
+0.156422133415412, 0.481251312657947, 0.0896157467788492, 0.113422462378774,
+0.440008311346203, 0.405481349318642, 0.661584051283645, 0.177506548363872,
+-0.0502843283588593, -0.0391553920913596, 0.0858680568445755,
+-0.447165673764055, -0.255412818130428, 0.227074028133202, 0.104814595113912,
+-0.0654347774523125, -0.15480508339869, -0.295010002861058, 0.0483408124602091,
+-0.267687564366045, -0.0744785107746998, -0.000237931595412723,
+0.288333506907116, -0.370849395155229, -0.0674939907037643, -0.00871289304513694,
+-0.262474943191295, -0.463979609682751, -0.442835386895785, 0.228280265569272,
+-0.0277942652439041, -0.386579447324454, -0.116861641318001,
+-0.0912475167099593, -0.428775046676782, -0.49609885751754, -0.168978783396661,
+-0.549869588072624, 0.132283165824646, 0.356413799989337, 0.110769271931632,
+-0.376196159551012, -0.081043833698957, -0.271758773555497, -0.399473865468713,
+-0.0897522537836282, -0.196740591139985, 0.0775685618823487,
+0.0139358544510347, -0.281351655469318, -0.110519889631501, -0.107843500106814,
+-0.287256629319911, 0.338095192483899, 0.00221074754149616, -0.0142318939922763,
+-0.312846657132765, 0.267470638986177, 0.238532687111193, -0.588870182434256,
+-0.0123626690289577, 0.000882899466512779, 0.132635011696946,
+-0.235463567114628, -0.22095990456809, -0.308610666502744, -0.49817836078938,
+-0.150222286257068, -0.0476787648888155, -0.0425375954559532,
+-0.151894890362691, -0.507497386941373, 0.160122719381304, 0.135542218902445,
+0.750123988224489, -0.424296243748149, -0.320191973528122, -0.057154137954616,
+0.201794291183636, -0.286517997752337, -0.124087321940696, -0.444943286478094,
+-0.161661740068816, 0.0138005145144995, -0.0795413553949182,
+0.167146472919544, 0.0567192313114487, 0.224779197458992, -0.507648127223213,
+0.188935182549631, -0.442266326116841, -0.225194664714837, -0.477525432979948,
+0.53011443584037, -0.0173803877131229, 0.331240858444557, -0.288939826973521,
+0.0873815095439753, 0.25093209949684, 0.304268070156412, -0.543977715930383,
+-0.653228490554378, 0.0248103009165425, -0.251260373378758, 0.586886155108382,
+-0.257169287642507, 0.934837791596915, 0.30636288743454, 0.56078332183635,
+0.19419763812188, 0.666757817999224, 0.914465213084671, -0.0521825137402021,
+-0.306406050456229, 0.385463005168671, 0.0283564329222284, -0.36042924339335,
+-0.320022958726126, 0.681684084469975, 0.264018843073032, 0.2002938455496,
+0.350807388642609, 0.506492058188652, -0.194725311862297, -0.0250327841616739,
+0.211914593413571, 0.119683417562778, -0.116458626009184, -0.55768320639903,
+-0.05283978870178, -0.555577113334489, 0.138988125377996, 0.0717182450359197,
+0.0940444169712275, -0.0222193659287519, -0.542064158947457,
+-0.0681701143812931, 0.773003048075478, -0.000344963462479885,
+-0.438309852499059, 0.247839773900812, 0.603661424816666, 0.260982805977646,
+0.323186588842982, 0.142250081673859, 0.891480312925851, 0.122229259725727,
+0.832021563681973, -0.0194230144161798, 0.0815495110352591, -0.1922627267187,
+-0.612021093748589, 0.0542992985220342, -0.33112399639742, -0.00332566210004999,
+0.696636380422487, 0.0435217766858488, 0.0834855485942831, 0.264700571178141,
+0.29150399862301, -0.405600829957714, -0.866717530068181, -0.204596307128319,
+-0.0822413530427478, -0.0693599419615392, -0.606282994375918),
+    `model4` = structure(c(0.0505079770612421, 0.346097266684412,
+    0.225227531018098, -0.265430534369366, -0.109266975619084,
+    -0.277365598961441, 0.079969555564246, 0.0889292537033074,
+    0.000240412921642494, -0.115458769771122, 0.124743375747278,
+    0.154281235224527, 0.0417833261321225, -0.247634559774012,
+    -0.181776980660633, 0.229031455304876, -0.171550746050321,
+    -0.267242785575537, 0.255170641354059, 0.184920308146076,
+    -0.0837063141184096, 0.0648431461125488, 0.118519982023444,
+    -0.383995567821588, 0.207825730874602, 0.0280424734950654,
+    0.23229038121196, 0.296388962773369, -0.00343119452953838,
+    -0.120130483437831, 0.103681222797781, -0.278326080912518,
+    0.230702800403771, 0.326065905241373, -0.0859885633423943,
+    0.352072009008253, 0.377179517668045, -0.0346322489048977,
+    -0.0610387870121867, 0.0482054182685466, 0.180731515927863,
+    -0.13533412837904, 0.115848964738308, -0.332415467836221,
+    0.0779662420991785, 0.0660436754759389, 0.0123293259431413,
+    0.328101726711354, 0.263789371878793, 0.205059468707598,
+    -0.0682855165756493, -0.141447157658757, 0.121925549085752,
+    0.324628059019262, -0.0839615254549234, -0.182657111589689,
+    -0.0237729616020019, -0.0848470571170993, -0.147388349975449,
+    0.199719733791251, -0.400347646293936, 0.297154843936233,
+    -0.209375227542968, 0.149066273830209, -0.0398614681733546,
+    0.0735542737895338, 0.268066753587031, 0.0908173159733647,
+    0.0898252963483688, 0.197902650012194, 0.141579371696386,
+    0.377261697915849, 0.109416451506754, -0.0422020734348628,
+    -0.0845320339327197, 0.138200726046716, -0.325253530904012,
+    -0.0607698736004774, 0.173672537796284, 0.0413461600534291,
+    -0.14117925489405, -0.111071012202126, -0.248590977874725,
+    0.0418979767711366, -0.197637105746472, -0.0205898745308762,
+    -0.127322048165107, 0.383158263324329, -0.2262723625039,
+    -0.0956334402023013, -0.0765483966222897, -0.147527666458059,
+    -0.29573454009452, -0.155915823765982, 0.133509266821157,
+    -0.111367275793207, -0.311768548360334, -0.0381321571307248,
+    -0.106693457059383, -0.195136459013213, -0.251622409975868,
+    -0.187667067508683, -0.287433037651591, 0.0614396075128266,
+    0.356017560258753, -0.0380212883589509, -0.36595943372468,
+    0.00238621955392297, -0.12041945166758, -0.315221677634862,
+    -0.0537193338014866, -0.165623683554309, 0.0171956871842675,
+    -0.0801001248378252, -0.194194666425193, -0.122215274856079,
+    -0.09568299395295, -0.145324776751198, 0.214115409457684,
+    0.093635065083593, 0.0498682449472644, -0.273405456608888,
+    0.0890813205061314, 0.0405419954503278, -0.338897255443112,
+    -0.0463679122454451, -0.0357033839567793, 0.0483295393592696,
+    -0.174385175575552, -0.0751917006821473, -0.108599556879973,
+    -0.297847487385371, -0.194873302944656, -0.142069964323753,
+    0.0360203239936483, -0.17646037542412, -0.401937579769087,
+    0.0617941293298529, 0.246532828935174, 0.41508495938374,
+    -0.316625572477893, -0.295414323917913, -0.0251983497149964,
+    0.0772424580389325, -0.177159029552371, -0.0490574378978053,
+    -0.378565852300937, 0.000789874397156123, -0.0166371697299979,
+    0.00582454979667421, 0.110992415943637, -0.0198876912099425,
+    0.124419401443897, -0.353337484657777, 0.0654001633117926,
+    -0.129349405425497, -0.170911625699705, -0.246779191261697,
+    0.351880259416098, 0.0868556582349667, 0.350280297782626,
+    -0.250571647948856, 0.0038651047992747, 0.0678424128396506,
+    0.0279597900729298, -0.402865281522461, -0.44208245972302,
+    -0.0906305944774451, -0.126216053054807, 0.431602047663502,
+    -0.192713557484444, 0.60583807388944, 0.226315716823551,
+    0.348396573148905, 0.14428477283538, 0.358816849105867, 0.61345944628739,
+    0.0873378046259909, -0.157556434703142, 0.1852636522675,
+    -0.0351331010862182, -0.114749426328361, -0.13248696050516,
+    0.396988670235259, 0.184739749057422, 0.133503391018557,
+    0.247860397307222, 0.380841513942013, -0.0795741280718016,
+    0.0908655496786135, 0.092513304566458, 0.031073758547944,
+    -0.146361091537815, -0.350423254247947, 0.0362347035380576,
+    -0.394829689034805, 0.094589303744867, -0.0166174535206876,
+    0.0754410653558115, 0.00161805960939104, -0.272135013320486,
+    -0.0196167559858731, 0.453642443373185, 0.000408443996138885,
+    -0.295266867336941, 0.246284132472111, 0.303589783499811,
+    0.208973105171253, 0.307476181984993, 0.108024457996552,
+    0.557114892086601, 0.182559183983039, 0.489709082965125,
+    -0.0415806518062814, 0.0573101042593935, -0.212479738360429,
+    -0.342293064572545, -0.0136025750734632, -0.235870365214115,
+    -0.0252550616573801, 0.43501019698572, 0.0697052570233523,
+    0.111710441104135, 0.194026769018153, 0.270017955614014,
+    -0.340120331638226, -0.588762506735382, -0.122088399911741,
+    -0.116506054438567, -0.126428875648902, -0.328602871261582
+    ), .Dim = c(231L, 1L), .Dimnames = list(NULL, "g"), class = c("lavaan.matrix",
+    "matrix")), `model9` = c(0.1419310848037, 0.353067331698551,
+    0.232815682575028, -0.299747457307119, -0.0356911462805415,
+    -0.367234921770825, 0.0152951475976176, 0.0907298115536918,
+    -0.0641515863687476, -0.0849217157652805, 0.0963784348801468,
+    0.18612481815743, 0.121160804648089, -0.223913184244961,
+    -0.201619473224431, 0.22681195151052, -0.114723679494996,
+    -0.260960576845665, 0.290479616388106, 0.243339170162146,
+    -0.0678278916987684, 0.0657787758810121, 0.0768251356894987,
+    -0.417015920244095, 0.234572989670061, 0.0759436855031042,
+    0.28125821215681, 0.290693264959186, -0.081010901489442,
+    -0.208270012269128, 0.200427772900575, -0.216083409183245,
+    0.202341948757579, 0.35849036990504, -0.0638579212079228,
+    0.3502969771835, 0.382618260230827, 0.0408412446797527, -0.0335540693525741,
+    0.0657891306290534, 0.12907445737915, -0.193990304437406,
+    0.0811189652810763, -0.378435609219059, 0.0452615362826297,
+    -0.0352938993013849, 0.0348976082629592, 0.272021619217596,
+    0.225769995371647, 0.175245492279956, -0.0635648893034067,
+    -0.176172887719258, 0.140352697311927, 0.295996157292538,
+    -0.11870842930293, -0.184076916763097, -0.0760721557164415,
+    -0.0517149484369744, -0.193236179208888, 0.119318907382913,
+    -0.455190513347449, 0.271357503746792, -0.21213713902468,
+    0.116648142506137, 0.0436087034609227, -0.0296475093777151,
+    0.237548848451897, 0.087809447399057, 0.0830183243137826,
+    0.162204448963098, 0.105267643557036, 0.402927797858373,
+    0.135395168532493, -0.0730263390331215, -0.057114254873215,
+    0.0711566758719802, -0.406692481069321, -0.128514169909539,
+    0.115617500799599, 0.0600040855978768, -0.104891092419, -0.131823058977356,
+    -0.236958879722972, 0.0720723379025038, -0.223851081599789,
+    -0.0285470174671673, -0.053002589341073, 0.383724965609921,
+    -0.213074445414981, -0.0681598136451083, -0.0379509275058646,
+    -0.22435915804973, -0.32404872355771, -0.122190936472989,
+    0.201924959469375, -0.0593571411244186, -0.378250388548742,
+    0.0214289177423453, -0.138812807491141, -0.152708982454316,
+    -0.32578561438665, -0.177602070722871, -0.293458676990819,
+    0.0649027286667829, 0.308010595532235, -0.0158892348087197,
+    -0.381304118113372, 0.00765875024939802, -0.169918779034077,
+    -0.245701504413569, -0.0884436204426398, -0.151020734651059,
+    0.0841425470767923, 0.0192527968821202, -0.200693546463954,
+    -0.100854030958177, -0.126196498138834, -0.145014617351964,
+    0.293817116765501, 0.10569221961793, 0.0884665123009778,
+    -0.22515213642764, 0.12741036236404, 0.0895149419250882,
+    -0.364357097992554, -0.0329266756930497, -0.0258549833857192,
+    0.0341799606343298, -0.254848958045451, -0.139797277608034,
+    -0.141657290005957, -0.259985199056938, -0.0983209334822354,
+    -0.12175639005348, 0.11357670185022, -0.216168832743413,
+    -0.407442721247758, -0.00205364308129949, 0.193427207904723,
+    0.415493335675111, -0.319341472986217, -0.28107564410265,
+    0.040628656749894, 0.0543959570655641, -0.262441538110714,
+    -0.0835363017267816, -0.389562046975858, 0.00814424327370613,
+    0.0440720659288337, -0.0642926048480312, 0.0371640755911325,
+    0.00584624845070801, 0.131454114963632, -0.308621641557196,
+    0.070959999194956, -0.164278969521504, -0.182305430197342,
+    -0.294894881166179, 0.393540239056708, 0.0542198477076581,
+    0.331536852764187, -0.254113983859878, -0.0222993268323784,
+    0.0689366696407921, 0.0613662105136615, -0.327954524239488,
+    -0.438754181199155, -0.0972221520892651, -0.171518803925867,
+    0.42170091139691, -0.138464536052356, 0.669707087216651,
+    0.232389916905562, 0.378904170798897, 0.137839253526609,
+    0.410614707089772, 0.66834696726387, 0.0205907656826806,
+    -0.123874138807572, 0.266109868186224, 0.0189047268180319,
+    -0.134302509504311, -0.153566342724446, 0.413487681708351,
+    0.172104915242595, 0.115362526889334, 0.247820849836693,
+    0.417251835933302, -0.0931189199472983, 0.0363764988122821,
+    0.121368393327392, 0.0915386621525881, -0.194447490064924,
+    -0.363246583267972, 0.0621367339794899, -0.473525065418583,
+    0.133843890009314, -0.0836311648338144, 0.087427779607568,
+    0.0230232328695551, -0.315696073922188, -0.0851492986887292,
+    0.525323180650363, -0.0161664311532693, -0.217049014768239,
+    0.28828635749445, 0.342076172924807, 0.192442638687355, 0.217138804508494,
+    0.0952624755271383, 0.64214675721925, 0.0776638676170035,
+    0.489160097325933, -0.0231157879087442, 0.0874388090222744,
+    -0.165024979182476, -0.400960046112762, 0.0417670720103779,
+    -0.235883956887977, 0.00875506891234394, 0.459123312006233,
+    0.0807418845898161, 0.127868123667789, 0.166059155249991,
+    0.283824802090278, -0.383085284741537, -0.661877733110475,
+    -0.0680110729581903, -0.0599117000547725, -0.100674555453488,
+    -0.297164532284013), `model15` = structure(c(-0.000462537260656579,
+    0.76342634348681, 0.332478765780219, -0.473942882131227,
+    -0.0963654431898618, -0.584487661309877, 0.174550103291789,
+    0.293549621919837, 0.0548781227479972, -0.264882450313779,
+    0.313784212172432, 0.317577556117098, 0.155447406979041,
+    -0.533240318234639, -0.321091355143467, 0.364119461549499,
+    -0.274885275846921, -0.476247927951889, 0.519288715650649,
+    0.476969944097553, -0.125134368347088, 0.177383069782471,
+    0.0624183252502093, -0.946320067342066, 0.443909651168876,
+    0.031413383019715, 0.470628022417312, 0.520292128177238,
+    0.139182768250565, -0.294608637378309, 0.208987595368481,
+    -0.489307759394473, 0.508654329330485, 0.721479974362501,
+    -0.258505354548618, 0.800226094322885, 0.828509562123254,
+    0.0236701987071868, -0.114128965938937, 0.160563828331547,
+    0.462600450520779, -0.0804444659920436, 0.384490780824448,
+    -0.552135710276069, 0.0895189973392768, 0.191405528568546,
+    0.0207389168447378, 0.65702570048669, 0.541139688259904,
+    0.217969643940935, -0.17715910506061, -0.328805187652756,
+    0.277472975843368, 0.743697763549758, -0.262983480946485,
+    -0.357928541001022, -0.0307874206147928, -0.125352519000739,
+    -0.105712866133601, 0.390982090602137, -0.78022547874016,
+    0.548333238103101, -0.316489837149214, 0.431755650642173,
+    -0.124916505190992, 0.10343450965617, 0.394699626811676,
+    0.331460664366143, 0.178767566780505, 0.188157717799426,
+    0.127991762351591, 0.543208893614588, 0.213850295287864,
+    -0.202749022701087, -0.171906912997145, 0.295946321656294,
+    -0.640534701431683, -0.169164839872095, 0.295461339981034,
+    0.0468083476059145, -0.401639447095651, -0.313102132686269,
+    -0.653506796421904, 0.0150608772045397, -0.483664068583115,
+    0.0321073209472285, -0.349321980326016, 0.779877750338692,
+    -0.421326504249966, -0.269960217508513, -0.111659072976138,
+    -0.320186056941078, -0.41123868831492, -0.447963943624158,
+    0.354097741427566, -0.252212672159567, -0.589455255643799,
+    0.0208291347258349, -0.201991081179706, -0.253303524239017,
+    -0.411635146837065, -0.285030833554236, -0.509031990497134,
+    0.1936304593729, 0.674989774611208, -0.0499552630150872,
+    -0.755192353490775, 0.00936572107845395, -0.135013239862914,
+    -0.570153622996685, -0.161504914726248, -0.286809485639615,
+    0.0577686513331638, -0.120269250391049, -0.345995426014167,
+    -0.290977248237821, -0.213606466059685, -0.244395420217938,
+    0.401837541816061, 0.274347815722686, 0.26220285665042, -0.475799187377753,
+    0.23740939274933, 0.189940760437838, -0.673899866523212,
+    -0.20014160191207, -0.124817320629291, 0.16860540621455,
+    -0.503076435887115, -0.157326808909123, -0.169181252505377,
+    -0.629239517419934, -0.383269243215202, -0.296643978512062,
+    0.0204058822010321, -0.424228979752806, -0.715453715023289,
+    0.116441131209346, 0.4289548768778, 0.686448899244745, -0.580737859131033,
+    -0.795089709233242, -0.0950788346098502, -0.0196297813124539,
+    -0.43099420990914, -0.133395131043612, -0.720541214787265,
+    0.0726381204320028, -0.0131080769548368, -0.14301363507421,
+    0.120308396099016, -0.115427495183451, 0.104678625308204,
+    -0.737517966744669, 0.127538802357482, -0.260825677431778,
+    -0.362640824384283, -0.445962049075413, 0.800974690697483,
+    -0.0247297007869323, 0.660748048524245, -0.514327729993888,
+    -0.170503436634348, 0.139961989591799, -0.108164956905546,
+    -0.77081469783001, -0.965792877182129, -0.125465284201854,
+    -0.301091166968321, 0.897501688207368, -0.252786064936373,
+    1.14392457030816, 0.441263220217773, 0.761605029821363, 0.432664076106288,
+    0.579956718890149, 1.18793988270819, 0.0287104388970027,
+    -0.211760154599603, 0.329507439078224, -0.0713913467293518,
+    -0.0953074932602716, -0.143035286881954, 0.690847548274778,
+    0.368241072787076, 0.368226359293809, 0.432496322291137,
+    0.702011121202122, -0.210822642341666, 0.0253191490257717,
+    0.424887701128325, 0.0995198328716418, -0.396276949519795,
+    -0.659965778622245, -0.0739510333590607, -0.816188659500228,
+    0.137157083793064, -0.107796326357403, 0.104839052402198,
+    0.0749968022029706, -0.626514754490351, -0.2154171509185,
+    0.807664327650579, 0.032304035470264, -0.439119831294281,
+    0.76599323325708, 0.605676638392551, 0.66723019822949, 0.603559675557953,
+    0.37079098751177, 1.25954096075909, 0.452428767975011, 1.07211527602869,
+    -0.213877930511171, 0.127805885943601, -0.440372128738034,
+    -0.627841247068508, -0.00448261331492825, -0.533186138180539,
+    0.14600285370422, 0.78673186083405, 0.26826373167252, 0.426572141450484,
+    0.449103839735306, 0.661323111809788, -0.797533142842904,
+    -1.26076539823966, -0.41682795069995, -0.358980307913087,
+    -0.408729761113191, -0.714330941445086), .Dim = c(231L, 1L
+    ), .Dimnames = list(NULL, "G"), class = c("lavaan.matrix",
+    "matrix")), zTotal = c(-0.025870687, 0.975029078, 0.430234696,
+    -0.531584574, -0.111529375, -0.721289579, 0.227895758, 0.358834001,
+    0.0995346, -0.330806311, 0.355621656, 0.393366559, 0.147546207,
+    -0.649636558, -0.423120318, 0.491346455, -0.38107624, -0.527171681,
+    0.636758765, 0.586623934, -0.124115887, 0.333690763, 0.144245139,
+    -1.154826207, 0.573904199, 0.112816789, 0.619189742, 0.55619083,
+    0.217429042, -0.388037353, 0.275914842, -0.63488753, 0.622320893,
+    0.959231698, -0.336015182, 1.034513647, 1.101839419, 0.003933568,
+    -0.127067688, 0.194625011, 0.615420725, 0.008092141, 0.541450687,
+    -0.678500874, 0.031344018, 0.302432778, 0.031866609, 0.845918672,
+    0.646375983, 0.31358169, -0.199072499, -0.334494336, 0.418298842,
+    0.971173379, -0.301318297, -0.403738107, 0.00995221, -0.206145204,
+    -0.120329691, 0.472471229, -0.999734233, 0.659579568, -0.377854087,
+    0.573324668, -0.120695201, 0.162233338, 0.529905301, 0.470708876,
+    0.200747357, 0.216044259, 0.100922189, 0.632765251, 0.261540387,
+    -0.232127141, -0.194741595, 0.418281254, -0.72978137, -0.194750928,
+    0.457608801, 0.114241876, -0.485485115, -0.318299056, -0.788598255,
+    0.013570292, -0.58653901, 0.125819104, -0.426580765, 1.007791469,
+    -0.490950057, -0.295499213, -0.097564302, -0.463842261, -0.529995631,
+    -0.560062685, 0.472449939, -0.29577944, -0.709897994, 0.026461424,
+    -0.175892477, -0.339103062, -0.475608268, -0.314746912, -0.530543283,
+    0.22093361, 0.937995166, -0.111731637, -0.923352675, 0.046740689,
+    -0.144389315, -0.716643998, -0.134934794, -0.393420975, 0.073386156,
+    -0.164174528, -0.351700049, -0.279635539, -0.192526125, -0.279136198,
+    0.500903002, 0.342469707, 0.305751548, -0.601632418, 0.252544865,
+    0.327101623, -0.870553346, -0.240744772, -0.134178756, 0.345026665,
+    -0.62032373, -0.185206074, -0.156293956, -0.811193029, -0.509329768,
+    -0.322123331, 0.060587619, -0.46378849, -0.872752739, 0.262460208,
+    0.535863608, 0.91388584, -0.719811317, -1.002631394, -0.051542801,
+    -0.049331706, -0.461451658, -0.123545876, -0.846142492, 0.131964445,
+    -0.038131581, -0.106219132, 0.162432027, -0.173589153, 0.213225923,
+    -0.946015064, 0.085009748, -0.255330628, -0.440682808, -0.458568137,
+    1.052159794, -0.116064568, 0.863793416, -0.643593478, -0.240571446,
+    0.112357403, -0.107641342, -0.97695921, -1.118288099, -0.152264445,
+    -0.34359282, 1.142000431, -0.277599197, 1.488204063, 0.55781492,
+    0.890303595, 0.509340012, 0.662618843, 1.518552363, 0.102367742,
+    -0.274434625, 0.395381278, -0.156992931, -0.105595842, -0.208856963,
+    0.859866172, 0.484318276, 0.473997808, 0.560052459, 0.873969517,
+    -0.288636505, 0.030004553, 0.491692056, 0.076267356, -0.479437784,
+    -0.809545014, -0.176426389, -0.943300946, 0.245836642, -0.129335612,
+    0.102602514, 0.11293678, -0.784988768, -0.239049296, 0.931118254,
+    0.100884057, -0.580515197, 1.045712855, 0.75223417, 0.85241902,
+    0.828015948, 0.452640283, 1.582213139, 0.638773659, 1.408118322,
+    -0.226607923, 0.193069188, -0.512694078, -0.797566378, 0.007118835,
+    -0.641116666, 0.267651802, 1.067125483, 0.42205795, 0.531585675,
+    0.635083356, 0.776888608, -0.975582261, -1.540547419, -0.447991636,
+    -0.427533657, -0.534113621, -0.848564127)), .Names = c("model1",
+"model3", "model4", "model9", "model15", "zTotal"), row.names = c(NA,
+-231L), class = "data.frame")
+
+oliFactorScores$model2 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model5 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model6 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model7 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model8 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model10 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model11 <- rnorm(nrow(oliFactorScores))
+oliFactorScores$model14 <- rnorm(nrow(oliFactorScores))
+
+
+oliFactorScores <- oliFactorScores[,c(1,2,3,9:10,4,13:14,5:6)]
+
+
+y <- cor(oliFactorScores)
+corrplot(y,
+         order = "original",
+         type = "upper",
+         diag = TRUE,
+         addCoef.col = "white",
+         insig = "blank",
+         tl.srt=25,
+         tl.col="black",
+         tl.cex = .6,
+         cl.cex = .6
+         )
+```
+
+##4.3 Schlussfolgerungen bezüglich der Stabilität der *g* Faktorwerte
+
+* Die extrahierten *g* Faktorwerte erweisen sich in beiden Datensätzen als (fast vollständig) unabhängig vom spezifizierten Messmodell
+* Weil der *g* Faktor für unsere Fragestellungen zentral ist, könnten wir Modell 15 verwenden
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
