@@ -1,0 +1,63 @@
+
+
+
+collection date: 07-Dec-2015 19:45:20
+elapsed time  (minutes)  =   7.9
+scaleF/frm_rt/bckg/T/Tg/lin/res 1.50/144/126/0.82/0.30/1/upperLim/whichEnv/spatEnv/TF/SF/angle   58/15/2/4.0/1.5/ 0
+horStim/horFix/verStim/verFix 0.00/0.00/0.00/1.25
+contrast(s) =   100.00  100.00  100.00  100.00
+  Size/Ecc: 1.00 /  0.00 ....  32.5  35.4
+  Size/Ecc: 2.00 /  0.00 ....  25.7  42.8
+  Size/Ecc: 3.00 /  0.00 ....  47.8  40.7
+  Size/Ecc: 4.00 /  0.00 ....  43.6  53.2
+
+Corr vs InCorr answers if over limit
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+
+
+
+collection date: 07-Dec-2015 19:52:48
+elapsed time  (minutes)  =   7.4
+scaleF/frm_rt/bckg/T/Tg/lin/res 1.50/144/126/0.82/0.30/1/upperLim/whichEnv/spatEnv/TF/SF/angle   58/15/2/4.0/1.5/ 0
+horStim/horFix/verStim/verFix 0.00/0.00/0.00/1.25
+contrast(s) =   100.00  100.00  100.00  100.00
+  Size/Ecc: 1.00 /  0.00 ....  32.9  48.3
+  Size/Ecc: 2.00 /  0.00 ....  26.3  36.4
+  Size/Ecc: 3.00 /  0.00 ....  59.5  36.9
+  Size/Ecc: 4.00 /  0.00 ....  39.2  49.3
+
+Corr vs InCorr answers if over limit
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+
+
+
+collection date: 07-Dec-2015 20:00:45
+elapsed time  (minutes)  =   7.9
+scaleF/frm_rt/bckg/T/Tg/lin/res 1.50/144/126/0.82/0.30/1/upperLim/whichEnv/spatEnv/TF/SF/angle   58/15/2/4.0/1.5/ 0
+horStim/horFix/verStim/verFix 0.00/0.00/0.00/1.25
+contrast(s) =   100.00  100.00  100.00  100.00
+  Size/Ecc: 1.00 /  0.00 ....  24.2  27.5
+  Size/Ecc: 2.00 /  0.00 ....  31.7  33.0
+  Size/Ecc: 3.00 /  0.00 ....  36.8  29.9
+  Size/Ecc: 4.00 /  0.00 ....  38.7  54.1
+
+Corr vs InCorr answers if over limit
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+  23  23  23  23
+   0   0   0   0
+   0   0   0   0
+
+TOTAL TIME  (minutes)  =  23.4
+RESULT =  33  33  42  46
