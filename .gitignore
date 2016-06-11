@@ -1,5 +1,6 @@
 # directories ===========================================================
-/Project
+/data
+/output
 /raw
 /scripts
 
