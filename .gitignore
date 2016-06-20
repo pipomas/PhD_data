@@ -1,8 +1,14 @@
 # directories ===========================================================
-/data
-/output
+/data/base/DDE
+/data/base/DDF
+/data/base/Insp
+/data/base/RP
+/data/base/Supp1
+/data/base/SuppX
+/data/base/TG
 /raw
 /scripts
+
 
 # OS X ===================================================================
 *.DS_Store
@@ -66,3 +72,4 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
