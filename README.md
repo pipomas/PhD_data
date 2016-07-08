@@ -1,37 +1,35 @@
-Habits
+Data and scripts
 ================
 
--   [GitHub Documents](#github-documents)
--   [Including Code](#including-code)
--   [Including Plots](#including-plots)
+This repository contains data and scripts you need to reproduce the results reported in repository "*PhD\_thesis*".
 
-GitHub Documents
-----------------
+### Prerequisites
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+-   You need [R](https://cran.r-project.org) installed on your system.
+-   I recommend using [RStudio](https://www.rstudio.com/products/rstudio/download/) as editor, as it includes a console, syntax-highlighting, tools for plotting, history, and workspace management.
+-   Download this repository by clicking on the green "*Clone or download*" button in the top right corner, and set the downloaded folder as your [R working directory](http://rfunction.com/archives/1001).
+-   ...
 
-Including Code
---------------
+### TODO: Adjust path to your directory
 
-You can include R code in the document as follows:
+This will get updated, as soon as possible.
 
-``` r
-summary(cars)
-```
+    Give examples
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+    ## [1] "2016-07-08 16:48:17 CEST"
 
-Including Plots
----------------
+Repository content
+------------------
 
-You can also embed plots, for example:
+### *data*
 
-![](README_files/figure-markdown_github/pressure-1.png)
+-   `base` folder includes raw files of the tasks used
+-   `processed` folder includes the csv used for the analyses
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### *scripts* folder
+
+-   Files `A_... - Q_...` contain analyses for the reported results
+-   `read_raw_files` folder contains scripts to create the csv in the `data/processed` folder
+-   `tikzDevice` folder contains scripts to generate .tex pictures
+
+last updated on July 08, 2016.
