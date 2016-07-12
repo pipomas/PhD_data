@@ -16,7 +16,7 @@ This will get updated, as soon as possible.
 
     Give examples
 
-    ## [1] "2016-07-11 08:35:46 CEST"
+    ## [1] "2016-07-12 09:25:50 CEST"
 
 Repository content
 ------------------
@@ -31,5 +31,7 @@ Repository content
 -   Files `A_... - Q_...` contain analyses for the reported results
 -   `read_raw_files` folder contains scripts to create the csv in the `data/processed` folder
 -   `tikzDevice` folder contains scripts to generate .tex pictures
+-   `===` sections in scripts correspond to sections or subsections in the pdf
+-   `---` sections in scripts correspond to no particular section in the pdf, but are reported
 
-last updated on July 11, 2016.
+last updated on July 12, 2016.
