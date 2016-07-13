@@ -8,9 +8,14 @@
 /data/base/Supp1
 /data/base/SuppX
 /data/base/TG
+
+/miscellaneous
+
 /output
 /raw
+
 /scripts
+
 
 # files ==================================================================
 README.Rmd

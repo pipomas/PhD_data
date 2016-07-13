@@ -16,7 +16,7 @@ This will get updated, as soon as possible.
 
     Give examples
 
-    ## [1] "2016-07-12 09:25:50 CEST"
+    ## [1] "2016-07-13 12:49:14 CEST"
 
 Repository content
 ------------------
@@ -32,6 +32,10 @@ Repository content
 -   `read_raw_files` folder contains scripts to create the csv in the `data/processed` folder
 -   `tikzDevice` folder contains scripts to generate .tex pictures
 -   `===` sections in scripts correspond to sections or subsections in the pdf
--   `---` sections in scripts correspond to no particular section in the pdf, but are reported
 
-last updated on July 12, 2016.
+A quick word of advice
+----------------------
+
+If you wonder what a R function does, place your cursor onto the function, for example `r.t|est()`, and press F1. Alternatively, you can type `?function` in the console. These commands open the help file for the respective function.
+
+last updated on July 13, 2016.
