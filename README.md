@@ -17,7 +17,7 @@ Repository content
 -   `base`: This folder includes all raw files of the tasks used
 -   `processed`: This folder stores the `dat.csv` file used for the analyses
 
-### `scripts`
+### `scripts` &lt;- not uploaded yet
 
 -   `A-Q`: Scripts to reproduce the reported results
 
@@ -34,4 +34,4 @@ Note
 
 -   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?function` in the console. These commands open the help file for the respective function.
 
-last updated on July 14, 2016 :tada:
+last updated on August 01, 2016 :tada:
