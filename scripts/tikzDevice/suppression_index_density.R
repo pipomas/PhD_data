@@ -1,8 +1,8 @@
 # ---
-# Title: "2_si_histogram"
-# Description: "This code produces a histogram of the suppression index"
+# Title: "suppression_index_density.R"
+# Description: "This code reproduces the density function of the suppression index"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
@@ -17,9 +17,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 2),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
@@ -52,9 +51,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 2),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 

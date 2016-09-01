@@ -1,8 +1,9 @@
 # ---
-# Title: "3_hick_scatter"
-# Description: "This code produces a scatterplot of all reaction times in the hick task"
+# Title: "hick_scatterplot.R"
+# Description: "This code reproduces a scatterplot of all reaction times in
+# the Hick task"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
@@ -13,10 +14,10 @@ library(tikzDevice)                  # load package
 # set graphical parameters ----------
 plot.new()
 
-par(pty = "m",
+par(pty = "m",                  # maximum ploting region
     mfrow = c(1, 4),            # 1x4 layout
-    mgp = c(2.5, .75, 0),        # axis label at 2 rows distance, tick labels at 1 row
-    mai = c(.4, .4,.2,.1),       # space between plots
+    mgp = c(2.5, .75, 0),       # axis label at 2.5 rows distance, tick labels at .75 row
+    mai = c(.4, .4,.2,.1),      # space between plots
     xpd = FALSE)                # allow content to protrude into outer margin (and beyond)
 
 plot(dat$H0meanRT,
@@ -39,7 +40,6 @@ axis(side = 1, at = c(1,60,120,177), las=1, cex.axis = 1.04)
 axis(side = 2, at = seq(0,700,100), las=2, cex.axis = 1.1)
 abline(h = mean(dat$H0meanRT), col = "black", lwd = 1, lty=1)
 title(ylab = "Mittlere Reaktionszeit (ms)", cex.lab = 1.3, line = 2.5)
-
 
 plot(dat$H1meanRT,
      main = "\\textsf{1-bit}",
@@ -114,10 +114,10 @@ tikz(file = "../Arbeit/PhD_thesis/tikzDevice/hick_scatterplot.tex",
      height = 6)
 plot.new()
 
-par(pty = "m",
+par(pty = "m",                  # maximum ploting region
     mfrow = c(1, 4),            # 1x4 layout
-    mgp = c(2.5, .75, 0),        # axis label at 2 rows distance, tick labels at 1 row
-    mai = c(.4, .4,.2,.1),       # space between plots
+    mgp = c(2.5, .75, 0),       # axis label at 2.5 rows distance, tick labels at .75 row
+    mai = c(.4, .4,.2,.1),      # space between plots
     xpd = FALSE)                # allow content to protrude into outer margin (and beyond)
 
 plot(dat$H0meanRT,
@@ -140,7 +140,6 @@ axis(side = 1, at = c(1,60,120,177), las=1, cex.axis = 1.04)
 axis(side = 2, at = seq(0,700,100), las=2, cex.axis = 1.1)
 abline(h = mean(dat$H0meanRT), col = "black", lwd = 1, lty=1)
 title(ylab = "Mittlere Reaktionszeit (ms)", cex.lab = 1.3, line = 2.5)
-
 
 plot(dat$H1meanRT,
      main = "\\textsf{1-bit}",

@@ -1,8 +1,9 @@
 # ---
-# Title: "1_ss_scatter"
-# Description: "This code produces a scatterplot of all thresholds in the spatial suppression task"
+# Title: "spatial_suppression_scatterplot.R"
+# Description: "This code reproduces a scatterplot of all thresholds in
+# the spatial suppression task"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
@@ -50,7 +51,6 @@ plot(dat$S2mean,
      ylab = "",
      xlab = "Vp",
      cex.lab=1.5,
-     # cex.sub=3,
      col = "black",
      pch = 20,
      cex = 1,
@@ -71,7 +71,6 @@ plot(dat$S3mean,
      ylab = "",
      xlab = "Vp",
      cex.lab=1.5,
-     # cex.sub=3,
      col = "black",
      pch = 20,
      cex = 1,
@@ -92,7 +91,6 @@ plot(dat$S4mean,
      ylab = "",
      xlab = "Vp",
      cex.lab=1.5,
-     # cex.sub=3,
      col = "black",
      pch = 20,
      cex = 1,
@@ -117,8 +115,8 @@ plot.new()
 
 par(pty = "m",
     mfrow = c(1, 4),            # 1x4 layout
-    mgp = c(2.5, .75, 0),        # axis label at 2 rows distance, tick labels at 1 row
-    mai = c(.4, .4,.2,.1),       # space between plots
+    mgp = c(2.5, .75, 0),       # axis label at 2 rows distance, tick labels at 1 row
+    mai = c(.4, .4,.2,.1),      # space between plots
     xpd = FALSE)                # allow content to protrude into outer margin (and beyond)
 
 plot(dat$S1mean,

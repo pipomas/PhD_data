@@ -16,7 +16,7 @@
 
 /scripts/all_scripts
 /scripts/read_raw_files
-/scripts/tiksDevice
+#/scripts/tikzDevice
 
 # files ==================================================================
 README.Rmd

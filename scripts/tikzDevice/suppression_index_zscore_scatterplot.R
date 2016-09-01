@@ -1,8 +1,9 @@
 # ---
-# Title: "4_si_intelligence_scatterplot"
-# Description: "This code produces a scatterplot of all reaction times in the hick task"
+# Title: "suppression_index_zscore_scatterplot.R"
+# Description: "This code produces a scatterplot of the relationship between the
+# suppression index and the BIS z score"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
@@ -13,14 +14,11 @@ library(tikzDevice)                  # load package
 # set graphical parameters ----------
 par(pty="s",               # make plot square
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    # mai = c(8, 4.5, 2, 5), # 4.5? space for one row of text at ticks and to separate plots
-    mar = c(4.1, 4, 0, 0), # 4.5? space for one row of text at ticks and to separate plots
+    mar = c(4.1, 4, 0, 0), # space for one row of text at ticks and to separate plots
     mgp = c(1.8, .7),      # axis label at 2 rows distance, tick labels at 1 row
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
 plot(dat$si, dat$zTotal,
-     #main = "\\textnormal{0-bit}",
-     #cex.main=2,
      xlim = c(-.4,1),
      ylim = c(-2,2),
      yaxt = "n",
@@ -28,7 +26,6 @@ plot(dat$si, dat$zTotal,
      ylab = "BIS-Test z-Wert",
      xlab = "Suppression-Index",
      cex.lab=1.2,
-     #cex.sub=3,
      col = "black",
      pch = 20,
      cex = 1,
@@ -41,8 +38,6 @@ plot(dat$si, dat$zTotal,
 
 axis(side = 1, at = seq(-.4,1,.20), las=1, cex.axis = 1.2)
 axis(side = 2, at = seq(-2,2,1), las=2, cex.axis = 1.2)
-# abline(h = mean(res$H0meanRT), col = "black", lwd = 1, lty=1)
-#title(ylab = "Suppression-Index", line = 3.5)#,cex.lab = 2)
 
 
 # ==============================================================================
@@ -56,8 +51,6 @@ par(pty="s",
     xpd = FALSE)
 
 plot(dat$si, dat$zTotal,
-     #main = "\\textnormal{0-bit}",
-     #cex.main=2,
      xlim = c(-.4,1),
      ylim = c(-2,2),
      yaxt = "n",
@@ -65,7 +58,6 @@ plot(dat$si, dat$zTotal,
      ylab = "BIS-Test \\textit{z}-Wert",
      xlab = "Suppression-Index",
      cex.lab=1.2,
-     #cex.sub=3,
      col = "black",
      pch = 20,
      cex = 1,
@@ -78,8 +70,6 @@ plot(dat$si, dat$zTotal,
 
 axis(side = 1, at = seq(-.4,1,.20), las=1, cex.axis = 1.2)
 axis(side = 2, at = seq(-2,2,1), las=2, cex.axis = 1.2)
-# abline(h = mean(res$H0meanRT), col = "black", lwd = 1, lty=1)
-#title(ylab = "Suppression-Index", line = 3.5)#,cex.lab = 2)
 
 par(mfrow=c(1,1))
 

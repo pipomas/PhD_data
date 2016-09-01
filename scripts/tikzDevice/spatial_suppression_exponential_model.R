@@ -1,17 +1,17 @@
 # ---
-# Title: "5_ss_expmodel"
-# Description: "This code produces a line graph of the exponential model used to
-#               explain the spatial suppression data"
+# Title: "spatial_suppression_exponential_model.R"
+# Description: "This code reproduces a line graph of the linear model used to
+# explain spatial suppression data"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
 library(tikzDevice)                  # load package
+# install.packages("plotrix")     # run this line if package is not installed yet
 library(plotrix)
 
 # this stuff is needed for plotting -------------------------
-
 std <- function(x) sd(x)/sqrt(length(x))
 x <- seq(.00001,10,.01)
 y <- mean(dat$Sasymptote)*exp(mean(dat$Sslope)*x)
@@ -37,7 +37,7 @@ plot.new()
 par(pty="s",               # make plot square
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
     mar = c(4, 4.5, 0, 0), # space for one row of text at ticks and to separate plots
-    mgp = c(3, .7,0),      #
+    mgp = c(3, .7,0),      # the margin line for the axis title, axis labels and axis line
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
 plot(x, y, lty = 1, pch = "", type = "o",
@@ -64,7 +64,7 @@ axis(side = 2, at = c(40,50,100,150,200), labels = c("0","50","100","150","200")
 axis.break(axis = 2, breakpos=45, style="slash", brw = .015)
 
 # "mean" points (we use the inverted values here - they do not correspond
-# with the means reported)
+# with the means reported in text and tables)
 points(1.8, mean(dat$S1mean), cex = 1.5, pch = 20)
 points(3.6, mean(dat$S2mean), cex = 1.5, pch = 20)
 points(5.4, mean(dat$S3mean), cex = 1.5, pch = 20)
@@ -85,12 +85,10 @@ plot.new()
 par(pty="s",               # make plot square
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
     mar = c(4, 4.5, 0, 0), # space for one row of text at ticks and to separate plots
-    mgp = c(3, .7,0),      #
+    mgp = c(3, .7,0),      # the margin line for the axis title, axis labels and axis line
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
 plot(x, y, lty = 1, pch = "", type = "o",
-     #main = "\\textnormal{0-bit}",
-     #cex.main=2,
      log = "xy",
      xlim = c(1,10),
      ylim = c(40,200),
@@ -112,7 +110,7 @@ axis(side = 2, at = c(40,50,100,150,200), labels = c("0","50","100","150","200")
 axis.break(axis = 2, breakpos=45, style="slash", brw = .015)
 
 # "mean" points (we use the inverted values here - they do not correspond
-# with the means reported)
+# with the means reported in text and tables)
 points(1.8, mean(dat$S1mean), cex = 1.5, pch = 20)
 points(3.6, mean(dat$S2mean), cex = 1.5, pch = 20)
 points(5.4, mean(dat$S3mean), cex = 1.5, pch = 20)

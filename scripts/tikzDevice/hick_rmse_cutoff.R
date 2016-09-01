@@ -1,13 +1,15 @@
 # ---
-# Title: "2_si_histogram"
-# Description: "This code produces a histogram of the suppression index"
+# Title: "hick_rmse_cutoff.R"
+# Description: "This code reproduces line graphs for the reported RMSE cutoff
+# analyses using the hick task"
 # Author: "Philipp Thomas"
-# Date: "2016-07-11"
+# Date: "2016-09-01"
 # ---
 
 # install.packages("tikzDevice")     # run this line if package is not installed yet
 library(tikzDevice)                  # load package
 
+# Relationship between Hick INTERCEPT and BIS Z SCORE --------------------------
 # Write code before generating .tex file ---------------------------------------
 # ==============================================================================
 # Generating data frame ----------------
@@ -43,9 +45,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 3),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
@@ -58,21 +59,6 @@ plot(data$rmse, data$r,
      yaxt = "n",
      xaxt = "n",
      bty = "n")
-
-# par(fig=c(0.65,1,0,0.8),new=TRUE)
-# boxplot(mtcars$mpg, axes=FALSE)
-
-# boxplot(dat$Hrmse,
-#         horizontal=TRUE,
-#         outline=TRUE,
-#         frame=F,
-#         axes = FALSE,
-#         # notch = TRUE,
-#         add = TRUE,
-#         range = 1,
-#         pch = 20,
-#         at = -.75,
-#         lty = 1)
 
 axis(side = 1, at = c(3,10,20,30,40,50,60,70))
 axis(side = 2, las = 2, at = seq(-1, 1, .25), labels = c("--1.00","--.75","--.50","--.25",".00", ".25", ".50", ".75", "1.00"))
@@ -90,9 +76,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 3),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
@@ -117,7 +102,7 @@ dev.off()
 
 
 
-
+# Relationship between Hick SLOPE and BIS Z SCORE --- --------------------------
 # Write code before generating .tex file ---------------------------------------
 # ==============================================================================
 # Generating data frame ----------------
@@ -153,9 +138,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 3),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
@@ -185,9 +169,8 @@ plot.new()
 
 par(pty="m",               # vs "s" (= square). Maximum plotting region ("m")
     oma = c(0,0,0,0),      # two rows of text at the outer left and bottom margin
-    mar = c(4, 3.5, .5, 0),   # space for X row of text at ticks and to separate plots
-    mgp = c(2.5, .7, 0),      #
-    # pin = c(5, 1),       # current plot dimensions (width, heigth) in inch
+    mar = c(4, 3.5, .5, 0),# space for X row of text at ticks and to separate plots
+    mgp = c(2.5, .7, 0),   # the margin line for the axis title, axis labels and axis line
     fin = c(5, 3),         # figure region dimensions in inch
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
