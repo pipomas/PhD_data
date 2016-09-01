@@ -241,7 +241,7 @@ dat %>%
 # To compute post hoc tests, you need to load the function
 # 'friedman.test.with.post.hoc' into your workspace. Run this line.
 # The function should then appear under 'Functions' in your workspace.
-source("scripts/source_scripts/D_Friedman_function.R")
+source("scripts/source_scripts/Friedman_function.R")
 
 # Compute post hoc tests
 friedman.test.with.post.hoc(threshold ~ condition | subject, datLong)
@@ -426,7 +426,7 @@ dat %>%
 # To compute post hoc tests, you need to load the function
 # 'friedman.test.with.post.hoc' into your workspace. Run this line.
 # The function should then appear under 'Functions' in your workspace.
-source("scripts/source_scripts/D_Friedman_function.R")
+source("scripts/source_scripts/Friedman_function.R")
 
 # Compute post hoc tests
 friedman.test.with.post.hoc(reactionTime ~ condition | subject, datLong)
