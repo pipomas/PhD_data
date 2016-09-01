@@ -8,7 +8,6 @@ This repository contains data and scripts you need to reproduce the results repo
 -   You need [R](https://cran.r-project.org) installed on your system.
 -   I recommend using [RStudio](https://www.rstudio.com/products/rstudio/download/) as editor, as it includes a console, syntax-highlighting, tools for plotting, history, and workspace management.
 -   Download this repository by clicking on the green «*Clone or download*» button in the top right corner, and [set the downloaded folder as your R working directory](http://rfunction.com/archives/1001).
--   After downloading the repository, you can read in data with script `1_Read_in_data.R`, and reproduce all results with `2_Analyses.R`
 
 Repository content
 ------------------
