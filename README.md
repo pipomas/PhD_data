@@ -8,6 +8,7 @@ This repository contains data and scripts you need to reproduce the results repo
 -   You need [R](https://cran.r-project.org) installed on your system.
 -   I recommend using [RStudio](https://www.rstudio.com/products/rstudio/download/) as editor, as it includes a console, syntax-highlighting, tools for plotting, history, and workspace management.
 -   Download this repository by clicking on the green «*Clone or download*» button in the top right corner, and [set the downloaded folder as your R working directory](http://rfunction.com/archives/1001).
+-   After downloading the repository, you can read in data with script `1_Read_in_data.R`, and reproduce all results with `2_Analyses.R`
 
 Repository content
 ------------------
@@ -20,14 +21,18 @@ Repository content
 ### `scripts`
 
 -   `1_Read_in_data.R`: Code for loading the required packages and reading in the csv file
--   `2_Analyses.R`: Code for reproduction of statistics in text and in tables. In order for this code to work, you will need to run the script `1_Read_in_data.R` first. For the reprocuction of figures see folder `tikzDevice`.
--   **NOT UPLOADED YET** `read_raw_files`: Folder contains scripts to generate `data/processed/dat.csv`
-    -   `BIS`: Run the script `1.read_in_BIS.R` to read the excel file. To drop the selected subjects from the sample, run `2.drop_subjects_BIS.R`.
-    -   `Fragebogen`: `1.read_in_questionnaire.R` reads the csv file produced by [EFS](http://www.unipark.de/www/front.php). `2.drop_subjects_questionnaire.R` drops selected subjects.
+-   `2_Analyses.R`: Code for reproduction of statistics in text and in tables. In order for this code to work, you will need to run the script `1_Read_in_data.R` first. For the reprocuction of figures see folder `tikzDevice`
+
+-   `source_scripts`: The functions in this folder get sourced from the code which reproduce the results. Do not change any of these, otherwise the code won't work anymore
+
+-   `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures
+
+-   **NOT UPLOADED YET** -&gt; `read_raw_files`: Folder contains scripts to generate `data/processed/dat.csv`
+    -   `BIS`: Run the script `1.read_in_BIS.R` to read the excel file. To drop the selected subjects from the sample, run `2.drop_subjects_BIS.R`
+    -   `Fragebogen`: `1.read_in_questionnaire.R` reads the csv file produced by [EFS](http://www.unipark.de/www/front.php). `2.drop_subjects_questionnaire.R` drops selected subjects
     -   `Hick`: `1.Hick_analysis_3SD.R` reads in raw data
-    -   `Supp`: `1.Supp2_analysis.R` reads in raw data, `2.drop_subjects_Supp2.R` drops selected subjects.
-    -   `Merge`: `merge_objects_to_dat.R` merges all objects into one data frame, and writes `data/processed/dat.csv`. In order for it to work, make sure you run all other scripts **in this folder** first.
--   **NOT UPLOADED YET** `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures.
+    -   `Supp`: `1.Supp2_analysis.R` reads in raw data, `2.drop_subjects_Supp2.R` drops selected subjects
+    -   `Merge`: `merge_objects_to_dat.R` merges all objects into one data frame, and writes `data/processed/dat.csv`. In order for it to work, make sure you run all other scripts **in this folder** first
 
 Note
 ----
