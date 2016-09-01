@@ -20,6 +20,7 @@ Repository content
 ### `scripts` &lt;- not uploaded yet
 
 -   `A-Q`: Scripts to reproduce the reported results
+-   `Code.R`: This code reproduces all results reported in text or tables (to reproduce figures, see -&gt; tikzDevice)
 
 -   `read_raw_files`: Folder contains scripts to generate `data/processed/dat.csv`
     -   `BIS`: Run the script `1.read_in_BIS.R` to read the excel file. To drop the selected subjects from the sample, run `2.drop_subjects_BIS.R`.
@@ -34,4 +35,4 @@ Note
 
 -   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?function` in the console. These commands open the help file for the respective function.
 
-last updated on August 01, 2016 :tada:
+last updated on September 01, 2016 :tada:
