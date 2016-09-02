@@ -601,6 +601,31 @@ dat %>%
   round(digits=5)
 
 
+# . . . . . . . . . . Difference between para- and nonparametric version -------
+# Create object 'product', which contains Product-moment correlations
+product <- dat %>%
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+         H0meanRT, H1meanRT, H2meanRT, H258meanRT,
+         zTotal, g) %>%
+  corr.test() %>%
+  .$r %>%
+  round(digits = 2)
+
+# Do the same for Rank-order correlations (object 'rankorder')
+rankorder <- dat %>%
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+         H0meanRT, H1meanRT, H2meanRT, H258meanRT,
+         zTotal, g) %>%
+  corr.test(., method = "spearman") %>%
+  .$r %>%
+  round(digits = 2)
+
+# Subract both vectors, and create data frame
+difference <- (product - rankorder) %>% as.data.frame()
+difference[lower.tri(difference)] <- 0
+
+# remove objects created in this section, only keep "dat"
+rm(list = setdiff(ls(), "dat"))
 
 # . . 3.2 1. Fragestellung -----------------------------------------------------
 # . . . . . . Correlation between suppression index and BIS z-score ------------
