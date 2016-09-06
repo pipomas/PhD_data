@@ -37,6 +37,6 @@ Repository content
 Note
 ----
 
--   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?function` in the console. These commands open the help file for the respective function.
+-   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?functionname` in the console. These commands open the help file for the respective function.
 
 last updated on September 06, 2016 :tada:
