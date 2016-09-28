@@ -16,11 +16,8 @@ summary(dat$edu)                     # summary for education
 summary(dat$language)                # summary for language
 
 # . . 2.6 Untersuchungsablauf --------------------------------------------------
-dat$t1 <- as.Date(dat$t1)                        # t1: convert factor to date
-dat$t2 <- as.Date(dat$t2)                        # t2: convert factor to date
-summary(as.numeric(dat$t2 - dat$t1)) %>% round() # summary for testing interval
-(dat$t2 - dat$t1) %>%                            # plot testing interval (i.e.
-  as.numeric() %>%                               # t2 - t1) with histogram
+summary(dat$tdiff) %>% round(digits = 0)
+(dat$tdiff) %>%                            # plot testing interval (i.e.
   hist(breaks = 100)
 
 
