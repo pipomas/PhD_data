@@ -396,7 +396,8 @@ ez.hick %>% .$ANOVA
 3   * .57   # numerator
 528 * .57   # denominator
 
-# remove objects created in this section, only keep "dat", "datLong" and post hoc funtion
+# remove objects created in this section, only keep "dat", "datLong",
+# and post hoc funtion
 rm(list = setdiff(ls(), c("dat", "datLong", "friedman.test.with.post.hoc")))
 
 # . . . . . . . . . . Compute post hoc tests -----------------------------------
@@ -410,7 +411,8 @@ posthoc.hick <- lme.hick %>%
   glht(., linfct = mcp(condition = "Tukey"))    # run post hoc tests
 posthoc.hick %>% summary                        # inspect them
 
-# remove objects created in this section, only keep "dat", "datLong" and post hoc funtion
+# remove objects created in this section, only keep "dat", "datLong",
+# and post hoc funtion
 rm(list = setdiff(ls(), c("dat", "datLong", "friedman.test.with.post.hoc")))
 
 # . . . . . . Friedman test ----------------------------------------------------
@@ -654,7 +656,7 @@ dat %>%
 # For more infos about the RMSE cutoff analyses see
 # "scripts/tikzDevice/spatial_suppression_rmse_cutoff.R"
 
-# . . . . . . Test if the obtained coefficients are significantly different ------
+# . . . . . . Test if the obtained coefficients are significantly different ----
 # from Melnick et al.'s (2013) reported correlation
 r.test(n = 177, r12 = .96, n2 = 65, r34 = .996)  # between si and slope
 r.test(n = 177, r12 = .00, n2 = 65, r34 = .68)   # between slope and IQ
@@ -1436,7 +1438,7 @@ totalVar <- (scaledVarDyn + scaledVarKon)
 rm(list = setdiff(ls(), "dat"))
 
 
-# . . . . . . Model 23: Fixed-links structural equation model (g on S + H)----
+# . . . . . . Model 23: Fixed-links structural equation model (g on S + H) -----
 # The best fitting fixed-links model of the spatial suppression task (model 8)
 # and the best fitting fixed-links model of the hick task (model 22) were used
 # to predict g.
