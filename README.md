@@ -12,10 +12,9 @@ This repository contains data and scripts you need to reproduce the results repo
 Repository content
 ------------------
 
-### `data`
+### `data/processed`
 
--   `base`: This folder includes all raw files of the tasks used
--   `processed`: This folder stores the `dat.csv` file used for the analyses
+-   This folder stores the `dat.csv` file used for the analyses
 
 ### `scripts`
 
@@ -39,4 +38,4 @@ Note
 
 -   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?functionname` in the console. These commands open the help file for the respective function.
 
-last updated on September 06, 2016 :tada:
+last updated on September 28, 2016 :tada:
