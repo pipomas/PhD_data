@@ -259,7 +259,7 @@ dat %>%
 # remove objects created in this section, only keep "dat" and post hoc funtion
 rm(list = setdiff(ls(), c("dat")))
 
-# . . . . . . Descriptives for suppression index (si) -------------------------------------------
+# . . . . . . Descriptives for suppression index (si) --------------------------
 dat %>% select(si) %>% unlist() %>% mean() %>% round(digits = 3)    # mean
 dat %>% select(si) %>% unlist() %>% sd() %>% round(digits = 3)      # sd
 dat %>% select(si) %>% unlist() %>% min() %>% round(digits = 3)     # min
@@ -448,51 +448,10 @@ dat %>%
 
 # . . . . 3.1.3 BIS-Test -------------------------------------------------------
 # . . . . . . Tabelle 6 --------------------------------------------------------
-# To reproduce the mean, sd, min, max of this table, open the script
-# 'scripts/read_raw_files/BIS/1.read_in_BIS.R', run it until LINE 63 (not any further!),
-# open 'scripts/read_raw_files/BIS/2.drop_subjects_BIS.R', run it.
-
-# merge it with data frame 'dat'
-data <- merge(dat, resultsBIS, by = "subject")
-names(data)
-
-# . . . . . . . . . . Mean -----------------------------------------------------
-round(sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), mean), digits = 2)
-
-# . . . . . . . . . . SD -------------------------------------------------------
-round(sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), sd), digits = 2)
-
-# . . . . . . . . . . Min ------------------------------------------------------
-sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), min)
-
-# . . . . . . . . . . Max ------------------------------------------------------
-sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), max)
-
-# . . . . . . . . . . Skew -----------------------------------------------------
-round(sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), skew), digits = 2)
-
-# . . . . . . . . . . Kurtosis -------------------------------------------------
-round(sapply(subset(data, select = c(OGraw, ZNraw, ANraw, XGraw, WAraw, ZPraw, TMraw,
-                              BDraw, SCraw, STraw, CHraw, TGraw, RZraw, WMraw,
-                              KWraw, ZZraw, OEraw, WEraw)), kurtosi), digits = 2)
-
-# . . . . . . . . . . Shapiro-Wilk test ----------------------------------------
-lapply(subset(dat, select = c(zOG, zZN, zAN, zXG, zWA, zZP, zTM,
-                              zBD, zSC, zST, zCH, zTG, zRZ, zWM,
-                              zKW, zZZ, zOE, zWE)), shapiro.test)
-
-# remove objects created in this section, only keep "dat"
-rm(list = setdiff(ls(), "dat"))
+# To reproduce the mean, sd, min, max, skew, kurtosis, and shapiro wilk
+# p values of this table, you would need raw data (instead of z standardised
+# data). The object 'dat' does not contain raw data. You have to trust me
+# on this one :)
 
 # . . . . . . Descriptives for BIS z-value -------------------------------------
 dat %>% select(zTotal) %>% unlist() %>% mean() %>% round(digits = 2) # mean
