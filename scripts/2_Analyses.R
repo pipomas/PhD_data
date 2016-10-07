@@ -1109,6 +1109,7 @@ lm.beta(model13) %>% .$standardized.coefficients %>% round(digits = 2)
 # . . . . . . Comparison of Model 12 and 13 ------------------------------------
 modelCompare(model12, model13)
 
+# . . . . 3.6.2 Analyse auf latenter Ebene -------------------------------------
 # . . . . . . Model 14: Congeneric hick model ----------------------------------
 # Since the variances of the hick conditions are a factor 100 times larger
 # than the variances of the spatial suppression task, new variables are built.
