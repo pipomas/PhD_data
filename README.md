@@ -25,6 +25,10 @@ Repository content
 
 -   `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures. You need to run `1_Read_in_data.R` before using the code. The files in this folder are less well commented, but are readable with basic knowledge of base graph functions.
 
+### `LICENCE`
+
+-   `dat.csv` is is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 2.5 Switzerland licence. Read the licence carefully to see what you are allowed to do.
+
 <!-- ### `read_raw_files` <- not uploaded yet -->
 <!-- * `A-Q`: Scripts to reproduce the reported results -->
 <!-- * `read_raw_files`: Folder contains scripts to generate `data/processed/dat.csv` -->
@@ -38,4 +42,4 @@ Note
 
 -   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?functionname` in the console. These commands open the help file for the respective function.
 
-last updated on September 28, 2016 :tada:
+last updated on October 11, 2016 :tada:
