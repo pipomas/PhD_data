@@ -52,7 +52,7 @@ lowSD <- (10 ^ (unlist(meanLog) -  unlist(sdLog)) %>%
   round(digits = 0)) - 10 ^ unlist(meanLog) %>%
   round()
 
-(abs(highSD) + abs(lowSD)) / 2    # sd of conditions
+(abs(highSD) + abs(lowSD)) / 2      # sd of conditions
 rm(list = setdiff(ls(), "dat"))     # remove unneeded objects from workspace
 
 # . . . . . . . . . . Min ------------------------------------------------------
@@ -194,7 +194,7 @@ d  <- l - 1                                    # number of levels - 1
 n  <- 177                                      # sample size
 ((d * (d + 1)) / 2) - 1                        # degree's of freedom
 W  <- ez.spatial.suppression[[2]][2]           # Mauchly's W from ezANOVA
-(((2 * d^2 + d + 2) / 6 * d) - n - 1) * log(W) # approximate chi square
+(((2 * d ^ 2 + d + 2) / 6 * d) - n - 1) * log(W) # approximate chi square
 
 # Greenhouse-Geisser epsilon
 ez.spatial.suppression %>%
@@ -381,7 +381,7 @@ d  <- l - 1                                    # number of levels - 1
 n  <- 177                                      # sample size
 ((d * (d + 1)) / 2) - 1                        # degree's of freedom
 W  <- ez.hick[[2]][2]                          # Mauchly's W from ezANOVA
-(((2 * d^2 + d + 2) / 6 * d) - n - 1) * log(W) # approximate chi square
+(((2 * d ^ 2 + d + 2) / 6 * d) - n - 1) * log(W) # approximate chi square
 
 # Greenhouse-Geisser epsilon
 ez.hick %>%
