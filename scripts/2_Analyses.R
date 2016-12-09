@@ -1491,3 +1491,39 @@ semPaths(model23fit, what= "std", style= "lisrel", layout = "tree", structural=F
 
 # remove objects of this paragraph
 rm(list = setdiff(ls(), "dat"))
+
+
+
+# 4. Diskussion ================================================================
+# . . 4.1 Fragestellungen ------------------------------------------------------
+# . . . . 4.1.1 Eine Bestätigung des Befunds von Melnick et al. (2013)? --------
+# . . . . . . t-Test for mean difference in suppression index ------------------
+# Vector of suppression indices from Melnick et al.'s Study 2
+MelnickStudy2 <- c(0.362176436,0.702660283,0.344620084,0.290644562,0.149251118,
+                   0.484738763,0.349264063,0.115494802,0.173536825,0.479335855,
+                   0.386266659,0.145451501,0.294042028,0.413284945,0.23903658,
+                   0.153098429,0.44774094,0.028228388,0.448190377,0.190441108,
+                   0.204717546,0.374748843,0.260663706,0.543388369,0.396705579,
+                   0.166746954,0.128258397,0.183556697,0.216251613,0.668146298,
+                   0.232097077,0.500830966,0.419319821,0.209205028,0.201201615,
+                   0.357834169,0.617245338,0.288727244,0.226376473,0.175228586,
+                   0.270472329,0.29887317,0.474161315,0.280192418,0.53771961,
+                   0.216466428,0.320808272,0.294487441,0.263583725,0.016305304,
+                   0.470331552,0.537914732,0.409208243)
+
+# Independent samples t-test
+t.test(MelnickStudy2, dat$si)
+
+# . . . . . . Effect size for mean difference in suppression index -------------
+cohen.d(dat$si, MelnickStudy2, paired = FALSE)$estimate %>%
+  round(digits = 2) %>%
+  abs()
+
+# . . . . . . Levene's test to check for equality of variances in SI -----------
+allSuppressionIndices <- c(dat$si, MelnickStudy2)
+groupFactor <- c(rep(1, length(dat$si)), rep(2, length(MelnickStudy2))) %>%
+  as.factor()
+leveneTest(allSuppressionIndices, groupFactor)
+
+# remove objects of this paragraph
+rm(list = setdiff(ls(), "dat"))
