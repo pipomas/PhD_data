@@ -1,33 +1,26 @@
-Data and scripts
+Basal mechanisms of information processing and mental ability: The contributions of mental speed, and spatial suppression to individual differences in psychometric intelligence
 ================
 
-This repository contains data and scripts you need to reproduce the results reported in repository [PhD\_thesis](https://github.com/pipomas/PhD_thesis).
+last updated on December 19, 2016 :balloon:
 
-### Prerequisites
-
--   You need [R](https://cran.r-project.org) installed on your system.
--   I recommend using [RStudio](https://www.rstudio.com/products/rstudio/download/) as editor, as it includes a console, syntax-highlighting, tools for plotting, history, and workspace management.
--   Download this repository by clicking on the green «*Clone or download*» button in the top right corner, and [set the downloaded folder as your R working directory](http://rfunction.com/archives/1001).
+This repository, PhD\_data, is a digital directory you can use to reproduce the results reported in [PhD\_thesis](https://github.com/pipomas/PhD_thesis). To do so, you need [R](https://cran.r-project.org) installed on your system. Click on **Download ZIP File** to download this repository. Then, [set the downloaded folder as your R working directory](http://rfunction.com/archives/1001).
 
 Repository content
 ------------------
 
-### `data/processed`
+-   `LICENCE`: `data/processed/dat.csv` is is licensed under a [*Creative Commons Attribution - NonCommercial - NoDerivatives 2.5 Switzerland License*](http://creativecommons.org/licenses/by-nc-nd/2.5/ch). Read the licence carefully to see what you are allowed to do.
 
--   This folder stores the `dat.csv` file used for the analyses
+For the reproduction of the results, you need to run the files in this folder
 
-### `scripts`
+-   `scripts`: Folder containing R scripts
+    -   `1_Read_in_data.R`: Code for loading the required packages and reading in the csv file.
+    -   `2_Analyses.R`: Code for the reproduction of statistics reported in text and tables.
 
--   `1_Read_in_data.R`: Code for loading the required packages and reading in the csv file.
--   `2_Analyses.R`: Code for reproduction of statistics reported in text and tables. In order for this code to work, you will need to run script `1_Read_in_data.R` first. For the reprocuction of figures see folder `tikzDevice`.
+Other files in this repository
 
+-   `data/processed/dat.csv`: Csv file used for the analyses
 -   `source_scripts`: The functions in this folder get sourced from the code which reproduce the results. Do not change any of these.
-
--   `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures. You need to run `1_Read_in_data.R` before using the code. The files in this folder are less well commented, but are readable with basic knowledge of base graph functions.
-
-### `LICENCE`
-
--   `dat.csv` is is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 2.5 Switzerland licence. Read the licence carefully to see what you are allowed to do.
+-   `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures. You need to run `1_Read_in_data.R` before using the code. The files in this folder are not well commented, but readable with basic knowledge of base graph functions.
 
 <!-- ### `read_raw_files` <- not uploaded yet -->
 <!-- * `A-Q`: Scripts to reproduce the reported results -->
@@ -37,9 +30,3 @@ Repository content
 <!--     + `Hick`: `1.Hick_analysis_3SD.R` reads in raw data -->
 <!--     + `Supp`: `1.Supp2_analysis.R` reads in raw data, `2.drop_subjects_Supp2.R` drops selected subjects. -->
 <!--     + `Merge`: `merge_objects_to_dat.R` merges all objects into one data frame, and writes `data/processed/dat.csv`. In order for it to work, make sure you **run all other scripts in this folder first**. -->
-Note
-----
-
--   If you wonder what a R function does, place your cursor onto the function, for example `r.test()`, and press F1. Alternatively, you can type `?functionname` in the console. These commands open the help file for the respective function.
-
-last updated on October 11, 2016 :tada:
