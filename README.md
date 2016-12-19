@@ -18,9 +18,19 @@ For the reproduction of the results, you need to run the files in this folder
 
 Other files in this repository
 
--   `data/processed/dat.csv`: Csv file used for the analyses
+-   `data/processed/dat.csv`: Csv file used for the analyses.
 -   `source_scripts`: The functions in this folder get sourced from the code which reproduce the results. Do not change any of these.
 -   `tikzDevice`: This folder contains scripts to transform plotting commands issued by R functions into LaTeX code blocks. Used to draw a majority of the figures. You need to run `1_Read_in_data.R` before using the code. The files in this folder are not well commented, but readable with basic knowledge of base graph functions.
+
+### Files to ignore
+
+Some files in this repository are only used for the displaying of this website or to tell [git](https://en.wikipedia.org/wiki/Git) which files not to track. You can ignore these files and folders:
+
+-   `javascripts`
+-   `stylesheets`
+-   `.gitignore`
+-   `index.html`
+-   `params.json`
 
 <!-- ### `read_raw_files` <- not uploaded yet -->
 <!-- * `A-Q`: Scripts to reproduce the reported results -->
