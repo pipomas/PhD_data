@@ -1,14 +1,14 @@
-Basal mechanisms of information processing and mental ability: The contributions of mental speed, and spatial suppression to individual differences in psychometric intelligence
+Basal mechanisms of information processing and mental ability: The contributions of mental speed and spatial suppression to individual differences in psychometric intelligence
 ================
 
-last updated on December 19, 2016 :balloon:
+last updated on December 20, 2016 :balloon:
 
-This repository, PhD\_data, is a digital directory you can use to reproduce the results reported in [PhD\_thesis](https://github.com/pipomas/PhD_thesis). To do so, you need [R](https://cran.r-project.org) installed on your system. Click on **Download ZIP File** to download this repository. Then, [set the downloaded folder as your R working directory](http://rfunction.com/archives/1001).
+This repository, PhD\_data, is a digital directory you can use to reproduce the results reported in <a href="https://github.com/pipomas/PhD_thesis" target="_blank">PhD\_thesis</a>. To do so, you need <a href="https://cran.r-project.org" target="_blank">R</a> installed on your system. Click on **Download ZIP File** to download this repository. Then, <a href="http://rfunction.com/archives/1001" target="_blank">set the downloaded folder as your R working directory</a>
 
 Repository content
 ------------------
 
--   `LICENCE`: `data/processed/dat.csv` is is licensed under a [*Creative Commons Attribution - NonCommercial - NoDerivatives 2.5 Switzerland License*](http://creativecommons.org/licenses/by-nc-nd/2.5/ch). Read the licence carefully to see what you are allowed to do.
+-   `LICENCE`: `data/processed/dat.csv` is is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/2.5/ch" target="_blank">*Creative Commons Attribution - NonCommercial - NoDerivatives 2.5 Switzerland License*</a>. Read the licence carefully to see what you are allowed to do.
 
 For the reproduction of the results, you need to run the files in this folder
 
