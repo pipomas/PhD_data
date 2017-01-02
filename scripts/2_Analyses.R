@@ -1079,7 +1079,7 @@ dat %>%
   select(Hslope, zTotal) %>%
   corr.test()
 
-# . . . . . . Tabelle 12 -------------------------------------------------------
+# . . . . . . Tabelle 13 -------------------------------------------------------
 dat %>%
   select(Hinter, Hslope, Sasymptote, Sslope, zTotal) %>%
   corr.test()
