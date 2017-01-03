@@ -1,7 +1,7 @@
-Basal mechanisms of information processing and mental ability: The contributions of mental speed and spatial suppression to individual differences in psychometric intelligence
+Der Zusammenhang zwischen Spatial-Suppression, Mental-Speed und psychometrischer Intelligenz (Basal mechanisms of information processing and mental ability: The contributions of mental speed and spatial suppression to individual differences in psychometric intelligence)
 ================
 
-last updated on December 20, 2016 :balloon:
+last updated on January 03, 2017 :balloon:
 
 This repository, PhD\_data, is a digital directory you can use to reproduce the results reported in <a href="https://github.com/pipomas/PhD_thesis" target="_blank">PhD\_thesis</a>. To do so, you need <a href="https://cran.r-project.org" target="_blank">R</a> installed on your system. Click on **Download ZIP File** to download this repository. Then, <a href="http://rfunction.com/archives/1001" target="_blank">set the downloaded folder as your R working directory</a>
 
