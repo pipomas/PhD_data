@@ -68,7 +68,6 @@ dat <- dat[,-1] %>% tbl_df()               # remove first col then make tbl_df()
 # These three commands are different ways to inspect the data frame named 'dat'
 dat                                        # inspect data frame table (tbl_df())
 str(dat)                                   # or reveal structure of object
-glimpse(dat)                               # or transposed version of 'print'
 
 # 5. Check for data and packages -----------------------------------------------
 # To check if data and packages were loaded correctly, you need to load the

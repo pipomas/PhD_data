@@ -259,14 +259,14 @@ dat %>%
 # remove objects created in this section, only keep "dat" and post hoc funtion
 rm(list = setdiff(ls(), c("dat")))
 
-# . . . . . . Descriptives for suppression index (si) --------------------------
-dat %>% select(si) %>% unlist() %>% mean() %>% round(digits = 3)    # mean
-dat %>% select(si) %>% unlist() %>% sd() %>% round(digits = 3)      # sd
-dat %>% select(si) %>% unlist() %>% min() %>% round(digits = 3)     # min
-dat %>% select(si) %>% unlist() %>% max() %>% round(digits = 3)     # max
-dat %>% select(si) %>% unlist() %>% skew() %>% round(digits = 2)    # skew
-dat %>% select(si) %>% unlist() %>% kurtosi() %>% round(digits = 2) # kurtosis
-dat %>% select(si) %>% unlist() %>% shapiro.test()                  # shapiro
+# . . . . . . Descriptives for suppression index (Si) --------------------------
+dat %>% select(Si) %>% unlist() %>% mean() %>% round(digits = 3)    # mean
+dat %>% select(Si) %>% unlist() %>% sd() %>% round(digits = 3)      # sd
+dat %>% select(Si) %>% unlist() %>% min() %>% round(digits = 3)     # min
+dat %>% select(Si) %>% unlist() %>% max() %>% round(digits = 3)     # max
+dat %>% select(Si) %>% unlist() %>% skew() %>% round(digits = 2)    # skew
+dat %>% select(Si) %>% unlist() %>% kurtosi() %>% round(digits = 2) # kurtosis
+dat %>% select(Si) %>% unlist() %>% shapiro.test()                  # shapiro
 
 # . . . . 3.1.2 Hick task ------------------------------------------------------
 # . . . . . . Tabelle 4 --------------------------------------------------------
@@ -525,7 +525,7 @@ rm(list = setdiff(ls(), "dat"))
 # . . . . . . Tabelle 8 --------------------------------------------------------
 # . . . . . . . . Product-moment correlations (r) ------------------------------
 dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test() %>%
@@ -534,7 +534,7 @@ dat %>%
 
 # . . . . . . . . Resepctive probabilities (p) ---------------------------------
 dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test() %>%
@@ -544,14 +544,14 @@ dat %>%
 # . . . . . . Tabelle A3 -------------------------------------------------------
 # . . . . . . . . Rank-order correlations (r) ----------------------------------
 dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test(., method = "spearman")
 
 # . . . . . . . . Respective probabilites (p) ----------------------------------
 dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test(., method = "spearman") %>%
@@ -562,7 +562,7 @@ dat %>%
 # . . . . . . . . . . Difference between para- and nonparametric version -------
 # Create object 'product', which contains Product-moment correlations
 product <- dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test() %>%
@@ -571,7 +571,7 @@ product <- dat %>%
 
 # Do the same for Rank-order correlations (object 'rankorder')
 rankorder <- dat %>%
-  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, si,
+  select(S1log10mean, S2log10mean, S3log10mean, S4log10mean, Si,
          H0meanRT, H1meanRT, H2meanRT, H258meanRT,
          zTotal, g) %>%
   corr.test(., method = "spearman") %>%
@@ -588,11 +588,12 @@ rm(list = setdiff(ls(), "dat"))
 # . . 3.2 1. Fragestellung -----------------------------------------------------
 # . . . . . . Correlation between suppression index and BIS z-score ------------
 dat %>%
-  select(si, zTotal) %>%
-  corr.test()
+  select(Si, zTotal) %>%
+  corr.test() %>%
+  {.$r[2]}
 
 # . . . . . . Scatterplot of relationship between suppression index and BIS z-score
-qplot(data = dat, si, zTotal)
+qplot(data = dat, Si, zTotal)
 
 # . . . . . . Test if the obtained coefficient is significantly different ------
 # from Melnick et al.'s (2013) reported correlation
@@ -658,7 +659,7 @@ dat %>%
 
 # . . . . . . Test if the obtained coefficients are significantly different ----
 # from Melnick et al.'s (2013) reported correlation
-r.test(n = 177, r12 = .96, n2 = 65, r34 = .996)  # between si and slope
+r.test(n = 177, r12 = .96, n2 = 65, r34 = .996)  # between Si and slope
 r.test(n = 177, r12 = .00, n2 = 65, r34 = .68)   # between slope and IQ
 
 # . . . . . . Correlation between asymptote and BIS z-score --------------------
@@ -1512,16 +1513,16 @@ MelnickStudy2 <- c(0.362176436,0.702660283,0.344620084,0.290644562,0.149251118,
                    0.470331552,0.537914732,0.409208243)
 
 # Independent samples t-test
-t.test(MelnickStudy2, dat$si)
+t.test(MelnickStudy2, dat$Si)
 
 # . . . . . . Effect size for mean difference in suppression index -------------
-cohen.d(dat$si, MelnickStudy2, paired = FALSE)$estimate %>%
+cohen.d(dat$Si, MelnickStudy2, paired = FALSE)$estimate %>%
   round(digits = 2) %>%
   abs()
 
-# . . . . . . Levene's test to check for equality of variances in SI -----------
-allSuppressionIndices <- c(dat$si, MelnickStudy2)
-groupFactor <- c(rep(1, length(dat$si)), rep(2, length(MelnickStudy2))) %>%
+# . . . . . . Levene's test to check for equality of variances in Si -----------
+allSuppressionIndices <- c(dat$Si, MelnickStudy2)
+groupFactor <- c(rep(1, length(dat$Si)), rep(2, length(MelnickStudy2))) %>%
   as.factor()
 leveneTest(allSuppressionIndices, groupFactor)
 
