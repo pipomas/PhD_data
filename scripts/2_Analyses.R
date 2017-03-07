@@ -31,18 +31,18 @@ summary(dat$tdiff) %>% round(digits = 0)
 # . . . . . . . . . . Mean -----------------------------------------------------
 dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., mean) %>%
-  lapply(., function(x) 10 ^ x) %>%
-  sapply(., round, digits = 0)
+  map_dbl(., mean) %>%
+  map_dbl(., function(x) 10 ^ x) %>%
+  map_dbl(., round, digits = 0)
 
 # . . . . . . . . . . SD -------------------------------------------------------
 sdLog <- dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., sd)
+  map_dbl(., sd)
 
 meanLog <- dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., mean)
+  map_dbl(., mean)
 
 highSD <- (10 ^ (unlist(meanLog) +  unlist(sdLog)) %>%
   round(digits = 0)) - 10 ^ unlist(meanLog) %>%
@@ -58,28 +58,28 @@ rm(list = setdiff(ls(), "dat"))     # remove unneeded objects from workspace
 # . . . . . . . . . . Min ------------------------------------------------------
 dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., min) %>%
-  lapply(., function(x) 10 ^ x) %>%
-  sapply(., round, digits = 0)
+  map_dbl(., min) %>%
+  map_dbl(., function(x) 10 ^ x) %>%
+  map_dbl(., round, digits = 0)
 
 # . . . . . . . . . . Max ------------------------------------------------------
 dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., max) %>%
-  lapply(., function(x) 10 ^ x) %>%
-  sapply(., round, digits = 0)
+  map_dbl(., max) %>%
+  map_dbl(., function(x) 10 ^ x) %>%
+  map_dbl(., round, digits = 0)
 
 # . . . . . . . . . . Skew -----------------------------------------------------
 dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., skew) %>%
-  sapply(., round, digits = 2)
+  map_dbl(., skew) %>%
+  map_dbl(., round, digits = 2)
 
 # . . . . . . . . . . Kurtosis -------------------------------------------------
 dat %>%
   select(S1log10mean, S2log10mean, S3log10mean, S4log10mean) %>%
-  lapply(., kurtosi) %>%
-  sapply(., round, digits = 2)
+  map_dbl(., kurtosi) %>%
+  map_dbl(., round, digits = 2)
 
 # . . . . . . . . . . Shapiro-Wilk test ----------------------------------------
 dat %>%
@@ -142,7 +142,8 @@ descriptives.function <- function(x) {    # define function
 
 dat %>%
   select(S1mean, S2mean, S3mean, S4mean) %>%
-  sapply(., descriptives.function) %>%
+  map(., descriptives.function) %>%
+  as.data.frame() %>%
   t()
 
 dat %>%
@@ -282,7 +283,8 @@ descriptives.function <- function(x) {    # define function
 
 dat %>%
   select(H0meanRT, H1meanRT, H2meanRT, H258meanRT) %>%
-  sapply(., descriptives.function) %>%
+  map(., descriptives.function) %>%
+  as.data.frame() %>%
   t()
 
 rm(list = setdiff(ls(), "dat"))     # Remove objects of this paragraph
@@ -636,7 +638,8 @@ descriptives.function <- function(x) {    # define function
 
 dat %>%
   select(Sasymptote, Sslope)  %>%
-  sapply(., descriptives.function) %>%
+  map(., descriptives.function) %>%
+  as.data.frame() %>%
   t()
 
 rm(list = setdiff(ls(), "dat"))     # Remove objects of this paragraph
@@ -1050,7 +1053,8 @@ descriptives.function <- function(x) {    # define function
 
 dat %>%
   select(Hinter, Hslope) %>%
-  sapply(., descriptives.function) %>%
+  map(., descriptives.function) %>%
+  as.data.frame() %>%
   t()
 
 dat %>%

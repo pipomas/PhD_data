@@ -53,9 +53,9 @@ ipak("pacman")
 # semPlot   : functions to visualise SEM results
 
 # Put needed package names into the vector 'mypackages'
-mypackages <- c("reshape2", "ggplot2", "ppcor", "lm.beta", "lmSupport",
+mypackages <- c("reshape2", "ppcor", "lm.beta", "lmSupport",
                 "effsize", "ez", "nlme", "coin", "multcomp", "MASS",
-                "lavaan", "semPlot", "psych", "dplyr", "pacman")
+                "lavaan", "semPlot", "psych", "tidyverse", "pacman")
 
 # Install and load 'mypackages'
 p_load(mypackages, character.only = TRUE)
