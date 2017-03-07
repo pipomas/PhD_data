@@ -30,10 +30,8 @@ ipak("pacman")
 
 # These additional packages were needed for the analyses
 # coin      : needed for friedman post hoc tests
-# dplyr     : provides a flexible grammar of data manipulation
 # effsize   : for the computation of effect sizes
 # ez        : for a ez computation of ANOVA
-# ggplot2   : for visually pleasing plots
 # lavaan    : package for structural equation modeling (SEM)
 # lm.beta   : for standardised regression coefficients
 # lmSupport : for F change statistics
@@ -51,6 +49,7 @@ ipak("pacman")
 # rprime    : read eprime txt files into R
 # R.matlab  : read MATLAB files into R
 # semPlot   : functions to visualise SEM results
+# tidyverse : http://tidyverse.org
 
 # Put needed package names into the vector 'mypackages'
 mypackages <- c("reshape2", "ppcor", "lm.beta", "lmSupport",
@@ -62,11 +61,11 @@ p_load(mypackages, character.only = TRUE)
 
 # 3. Read csv file -------------------------------------------------------------
 dat <- read.csv("data/processed/dat.csv")  # read csv from downloaded folder
-dat <- dat[,-1] %>% tbl_df()               # remove first col then make tbl_df()
+dat <- dat[,-1] %>% as_tibble()            # remove first col then make tibble()
 
 # 4. Inspect data frame 'dat' --------------------------------------------------
 # These three commands are different ways to inspect the data frame named 'dat'
-dat                                        # inspect data frame table (tbl_df())
+dat                                        # inspect tibble()
 str(dat)                                   # or reveal structure of object
 
 # 5. Check for data and packages -----------------------------------------------
