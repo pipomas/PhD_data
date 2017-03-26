@@ -18,7 +18,7 @@ par(pty="s",               # make plot square
     mgp = c(1.8, .7),      # axis label at 2 rows distance, tick labels at 1 row
     xpd = FALSE)           # allow content to protrude into outer margin (and beyond))
 
-plot(dat$si, dat$zTotal,
+plot(dat$Si, dat$zTotal,
      xlim = c(-.4,1),
      ylim = c(-2,2),
      yaxt = "n",
