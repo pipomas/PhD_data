@@ -3,14 +3,14 @@ Der Zusammenhang zwischen Spatial-Suppression, Mental-Speed und psychometrischer
 
 English title: **The relationship between spatial suppression, mental speed and psychometric intelligence**
 
-Last updated on: January 12, 2017 :balloon:
+Last updated on: April 01, 2017 :balloon:
 
 This repository, PhD\_data, is a digital directory you can use to reproduce the results reported in <a href="https://github.com/pipomas/PhD_thesis" target="_blank">PhD\_thesis</a>. To do so, you need <a href="https://cran.r-project.org" target="_blank">R</a> installed on your system. Click on **Download ZIP File** to download this repository. Then, <a href="http://rfunction.com/archives/1001" target="_blank">set the downloaded folder as your R working directory</a>
 
 Repository content
 ------------------
 
--   `LICENCE`: `data/processed/dat.csv` is is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/2.5/ch" target="_blank">*Creative Commons Attribution - NonCommercial - NoDerivatives 2.5 Switzerland License*</a>. Read the licence carefully to see what you are allowed to do.
+-   `LICENCE`: `data/processed/dat.csv` is is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/2.5/ch" target="_blank">*Creative Commons Attribution - NonCommercial - NoDerivatives 2.5 Switzerland License*</a>.
 
 For the reproduction of the results, you need to run the files in this folder
 
